@@ -1,0 +1,15 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $primary-font;
+  font-weight: $fw-normal;
+  font-style: normal;
+  line-height: 1;
+  position: relative;
+  overflow-x: hidden;
+  background: $bgc-primary--dark;
+}
