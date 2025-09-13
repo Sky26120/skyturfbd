@@ -1,7 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
 import DarkLogo from '@/public/images/darklogo.png'
-import Header from '@/components/header'
 
 const home = () => {
   return (
@@ -20,7 +19,6 @@ const home = () => {
           </div>
         </div>
       </div>
-      <Header />
     </>
   )
 }
