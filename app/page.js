@@ -1,11 +1,12 @@
 import React from 'react'
 import Image from 'next/image'
 import DarkLogo from '@/public/images/darklogo.png'
+import Header from '@/components/Header'
 
 const home = () => {
   return (
     <>
-      <div className='home'>
+      {/* <div className='home'>
         <div className="container">
           <div className='home-content'>
             <div className='home-logo-wrap'>
@@ -18,7 +19,9 @@ const home = () => {
             <h2 className='home-title'>This site is under construction</h2>
           </div>
         </div>
-      </div>
+      </div> */}
+
+      <Header />
     </>
   )
 }
