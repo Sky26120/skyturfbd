@@ -9,8 +9,11 @@
     }
 
     &__logo-wrap {
-        max-width: rem(120px);
+        max-width: rem(75px);
         width: 100%;
+        @include mq(large) {
+            max-width: rem(120px);
+        }
     }
 
     &__logo {
@@ -19,10 +22,13 @@
     }
 
     &__nav-wrap {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: rem(20px);
+        display: none;
+        @include mq(large) {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: rem(20px);
+        }
     }
 
     &__nav-item {
