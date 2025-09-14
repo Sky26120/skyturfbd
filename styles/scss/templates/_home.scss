@@ -40,3 +40,16 @@
     font-size: 60px;
   }
 }
+
+
+// Hero Section
+
+.hero {
+  background: url(../../../public/images/heroimage.jpg);
+  background-size: cover;
+  background-position: center;
+  min-height: rem(160px);
+  @include mq(large) {
+    min-height: rem(400px);
+  }
+}
