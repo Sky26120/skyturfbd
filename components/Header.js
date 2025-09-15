@@ -10,11 +10,13 @@ const header = () => {
             <div className="container">
                 <div className="header__content">
                   <div className="header__logo-wrap">
-                    <Image 
-                      src={DarkLogo}
-                      alt='Sky Turf Logo'
-                      className='header__logo'
-                    />
+                    <Link href='/'>
+                      <Image 
+                        src={DarkLogo}
+                        alt='Sky Turf Logo'
+                        className='header__logo'
+                      />
+                    </Link>
                   </div>
                   <div className="header__nav-wrap">
                     <Link href='/'>

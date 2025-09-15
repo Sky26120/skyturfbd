@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
-import SkyTurf from '@/public/images/skyturf.jpg'
-import TimeUpTurf from '@/public/images/timeupturf.jpg'
+import SkyTurf from '@/public/images/skyturf.webp'
+import TimeUpTurf from '@/public/images/timeupturf.webp'
 import Link from 'next/link'
 
 const Turfs = () => {
@@ -19,6 +19,7 @@ const Turfs = () => {
                                     src={SkyTurf}
                                     alt=''
                                     className='our-turfs__turf-image'
+                                    width={600}
                                 />
                                 <span className='our-turfs__image-title'>Sky Turf</span>
                             </div>
@@ -33,6 +34,7 @@ const Turfs = () => {
                                     src={TimeUpTurf}
                                     alt=''
                                     className='our-turfs__turf-image'
+                                    width={600}
                                 />
                                 <span className='our-turfs__image-title'>Time up Turf</span>
                             </div>
