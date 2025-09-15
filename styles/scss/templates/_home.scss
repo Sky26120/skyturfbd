@@ -1,45 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=League+Gothic&display=swap');
+// * {
+//   padding: 0;
+//   margin: 0;
+//   box-sizing: border-box;
+// }
 
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
+// .home {
+//   height: 100vh;
+//   background: #0059A9;
+//   display: grid;
+//   place-items: center;
+// }
 
-.home {
-  height: 100vh;
-  background: #0059A9;
-  display: grid;
-  place-items: center;
-}
+// .home-logo-wrap {
+//   max-width: 400px;
+//   width: 50%;
+//   margin: auto;
+//   @include mq(large) {
+//     width: 100%;
+//   }
+// }
 
-.home-logo-wrap {
-  max-width: 400px;
-  width: 50%;
-  margin: auto;
-  @include mq(large) {
-    width: 100%;
-  }
-}
+// .home-logo {
+//   width: 100%;
+//   height: 100%;
+// }
 
-.home-logo {
-  width: 100%;
-  height: 100%;
-}
-
-.home-title {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 30px;
-  font-family: "League Gothic";
-  color: #ffffff;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  font-style: italic;
-  @include mq(large) {
-    font-size: 60px;
-  }
-}
+// .home-title {
+//   text-align: center;
+//   margin-top: 20px;
+//   font-size: 30px;
+//   font-family: "League Gothic";
+//   color: #ffffff;
+//   letter-spacing: 4px;
+//   text-transform: uppercase;
+//   font-style: italic;
+//   @include mq(large) {
+//     font-size: 60px;
+//   }
+// }
 
 
 // Hero Section
@@ -183,21 +181,21 @@
   }
 }
 
-// // Extra Facilities Section
-.Facilities {
-  padding: rem(50px);
-  @include mp(large) {
-    padding: rem(100px) 0;
-  }
-  &__heading{
-    text-align: center;
-    font-size: rem(30px);
-    color: #000;
-    font-weight: $fw-extra-bold;
-    font-style: italic;
-    text-transform: uppercase;
-    @include mp(large){
-      font-size: rem(40px);
-    }
-  }
-}
+// // // Extra Facilities Section
+// .Facilities {
+//   padding: rem(50px);
+//   @include mp(large) {
+//     padding: rem(100px) 0;
+//   }
+//   &__heading{
+//     text-align: center;
+//     font-size: rem(30px);
+//     color: #000;
+//     font-weight: $fw-extra-bold;
+//     font-style: italic;
+//     text-transform: uppercase;
+//     @include mp(large){
+//       font-size: rem(40px);
+//     }
+//   }
+// }

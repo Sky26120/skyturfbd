@@ -19,11 +19,9 @@ const Hero = () => {
       <section className='hero'>
         <Swiper 
           navigation={true} 
-          modules={[Navigation]} 
+          modules={[Navigation, Pagination, Autoplay]} 
           className="mySwiper"
           slidesPerView={1}
-          modules={[Navigation, Pagination, Autoplay]}
-          navigation={true}
           loop={true}
         >
 
