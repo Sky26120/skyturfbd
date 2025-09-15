@@ -3,6 +3,7 @@ import Image from 'next/image'
 import DarkLogo from '@/public/images/darklogo.png'
 import Header from '@/components/Header'
 import Hero from '@/components/Hero'
+import Turfs from '@/components/Turfs'
 
 const home = () => {
   return (
@@ -24,6 +25,7 @@ const home = () => {
 
       <Header />
       <Hero />
+      <Turfs />
     </>
   )
 }

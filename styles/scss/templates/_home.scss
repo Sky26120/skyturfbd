@@ -45,11 +45,102 @@
 // Hero Section
 
 .hero {
-  background: url(../../../public/images/heroimage.jpg);
+  background: url(../../../public/images/heroimage.webp);
   background-size: cover;
   background-position: center;
   min-height: rem(160px);
   @include mq(large) {
     min-height: rem(400px);
+  }
+}
+
+
+// Our Turf Section
+
+.our-turfs {
+  padding: rem(50px) 0;
+  @include mq(large) {
+    padding: rem(100px);
+  }
+
+  &__heading {
+    text-align: center;
+    font-size: rem(30px);
+    color: #000000;
+    font-weight: $fw-extra-bold;
+    font-style: italic;
+    text-transform: uppercase;
+    @include mq(large) {
+      font-size: rem(40px);
+    }
+  }
+
+  &__content {
+    margin-top: rem(30px);
+    @include mq(large) {
+      margin-top: rem(50px);
+    }
+
+    @include mq(large) {
+      display: flex;
+      justify-content: center;
+      gap: rem(30px);
+    }
+  }
+
+  &__turf-wrap {
+    margin-bottom: rem(30px);
+    transition: 0.4s;
+    @include mq(large) {
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      cursor: pointer;
+      .our-turfs__turf-image-wrap {
+        transform: translateY(-20px);
+      }
+    }
+  }
+
+  &__turf-image-wrap {
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    height: rem(400px);
+    width: 100%;
+    position: relative;
+    @include mq(large) {
+      height: rem(600px);
+    }
+
+    &::before {
+      content: '';
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      inset: 0;
+      border-radius: rem(10px);
+    }
+  }
+
+  &__turf-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: rem(10px);
+  }
+
+  &__turf-name {
+    font-size: rem(25px);
+    font-weight: $fw-extra-bold;
+    font-style: italic;
+    margin-top: rem(10px);
+    color: #000000;
+  }
+
+  &__turf-text {
+    margin-top: rem(5px);
+    font-size: rem(16px);
+    color: #0059A9;
   }
 }
