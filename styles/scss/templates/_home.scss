@@ -43,20 +43,32 @@
 
 
 // Hero Section
-
 .hero {
-  background: url(../../../public/images/heroimage.webp);
-  background-size: cover;
-  background-position: center;
-  min-height: rem(160px);
-  @include mq(large) {
-    min-height: rem(400px);
+  &__slider-image-wrap {
+    height: rem(160px);
+    @include mq(large) {
+      height: rem(400px);
+    }
+  }
+
+  &__slider-item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 
+.swiper-button-prev,
+.swiper-button-next {
+  width: rem(25px) !important;
+  height: rem(25px) !important;
+  @include mq(large) {
+    width: rem(30px) !important;
+    height: rem(30px) !important;
+  }
+}
 
 // Our Turf Section
-
 .our-turfs {
   padding: rem(50px) 0;
   @include mq(large) {
@@ -97,14 +109,14 @@
     transition: 0.4s;
     @include mq(large) {
       margin-bottom: 0;
-    }
 
-    &:hover {
-      cursor: pointer;
-      .our-turfs__turf-image-wrap {
-        transform: translateY(-20px);
+      &:hover {
+        cursor: pointer;
+        .our-turfs__turf-image-wrap {
+          transform: translateY(-20px);
+        }
       }
-    }
+    }    
   }
 
   &__turf-image-wrap {
