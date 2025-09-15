@@ -123,6 +123,28 @@
     }
   }
 
+  &__image-title {
+    position: absolute;
+    font-size: rem(30px);
+    font-weight: $fw-extra-bold;
+    text-transform: uppercase;
+    font-style: italic;
+    color: transparent;
+    top: 50%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    transform: translateY(-20px);
+    text-align: center;
+    -webkit-background-clip: text;
+    -webkit-text-stroke: 1px #fff;
+    opacity: 0.5;
+    @include mq(large) {
+      font-size: rem(40px);
+    }
+  }
+
   &__turf-image {
     width: 100%;
     height: 100%;
