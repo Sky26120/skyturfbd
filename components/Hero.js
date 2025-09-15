@@ -11,7 +11,7 @@ import 'swiper/css/pagination'
 
 import Image from 'next/image'
 import HeroSlideOne from '@/public/images/heroskyturf.webp'
-import HeroSlideTwo from '@/public/images/timeupturf.webp'
+import HeroSlideTwo from '@/public/images/herotimeupturf.webp'
 
 const Hero = () => {
   return (
@@ -30,6 +30,7 @@ const Hero = () => {
               <Image 
                 src={HeroSlideOne}
                 alt=''
+                width={1500}
                 className='hero__slider-item-image'
               />
             </div>
@@ -39,6 +40,7 @@ const Hero = () => {
               <Image 
                 src={HeroSlideTwo}
                 alt=''
+                width={1500}
                 className='hero__slider-item-image'
               />
             </div>
