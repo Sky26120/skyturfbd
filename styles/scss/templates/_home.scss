@@ -1,62 +1,72 @@
-@import url('https://fonts.googleapis.com/css2?family=League+Gothic&display=swap');
+// * {
+//   padding: 0;
+//   margin: 0;
+//   box-sizing: border-box;
+// }
 
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
+// .home {
+//   height: 100vh;
+//   background: #0059A9;
+//   display: grid;
+//   place-items: center;
+// }
 
-.home {
-  height: 100vh;
-  background: #0059A9;
-  display: grid;
-  place-items: center;
-}
+// .home-logo-wrap {
+//   max-width: 400px;
+//   width: 50%;
+//   margin: auto;
+//   @include mq(large) {
+//     width: 100%;
+//   }
+// }
 
-.home-logo-wrap {
-  max-width: 400px;
-  width: 50%;
-  margin: auto;
-  @include mq(large) {
-    width: 100%;
-  }
-}
+// .home-logo {
+//   width: 100%;
+//   height: 100%;
+// }
 
-.home-logo {
-  width: 100%;
-  height: 100%;
-}
-
-.home-title {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 30px;
-  font-family: "League Gothic";
-  color: #ffffff;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  font-style: italic;
-  @include mq(large) {
-    font-size: 60px;
-  }
-}
+// .home-title {
+//   text-align: center;
+//   margin-top: 20px;
+//   font-size: 30px;
+//   font-family: "League Gothic";
+//   color: #ffffff;
+//   letter-spacing: 4px;
+//   text-transform: uppercase;
+//   font-style: italic;
+//   @include mq(large) {
+//     font-size: 60px;
+//   }
+// }
 
 
 // Hero Section
-
 .hero {
-  background: url(../../../public/images/heroimage.webp);
-  background-size: cover;
-  background-position: center;
-  min-height: rem(160px);
-  @include mq(large) {
-    min-height: rem(400px);
+  &__slider-image-wrap {
+    height: rem(160px);
+    @include mq(large) {
+      height: rem(400px);
+    }
+  }
+
+  &__slider-item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 
+.swiper-button-prev,
+.swiper-button-next {
+  width: rem(25px) !important;
+  height: rem(25px) !important;
+  @include mq(large) {
+    width: rem(30px) !important;
+    height: rem(30px) !important;
+  }
+}
 
 // Our Turf Section
-
 .our-turfs {
   padding: rem(50px) 0;
   @include mq(large) {
@@ -72,6 +82,19 @@
     text-transform: uppercase;
     @include mq(large) {
       font-size: rem(40px);
+    }
+  }
+
+  &__text {
+    text-align: center;
+    margin-top: rem(10px);
+    font-size: rem(16px);
+    line-height: 1.3;
+    color: #000000;
+    @include mq(large) {
+      font-size: rem(18px);
+      width: 40%;
+      margin: rem(10px) auto 0;
     }
   }
 
@@ -97,14 +120,14 @@
     transition: 0.4s;
     @include mq(large) {
       margin-bottom: 0;
-    }
 
-    &:hover {
-      cursor: pointer;
-      .our-turfs__turf-image-wrap {
-        transform: translateY(-20px);
+      &:hover {
+        cursor: pointer;
+        .our-turfs__turf-image-wrap {
+          transform: translateY(-20px);
+        }
       }
-    }
+    }    
   }
 
   &__turf-image-wrap {
@@ -171,21 +194,21 @@
   }
 }
 
-// // Extra Facilities Section
-.Facilities {
-  padding: rem(50px);
-  @include mp(large) {
-    padding: rem(100px) 0;
-  }
-  &__heading{
-    text-align: center;
-    font-size: rem(30px);
-    color: #000;
-    font-weight: $fw-extra-bold;
-    font-style: italic;
-    text-transform: uppercase;
-    @include mp(large){
-      font-size: rem(40px);
-    }
-  }
-}
+// // // Extra Facilities Section
+// .Facilities {
+//   padding: rem(50px);
+//   @include mp(large) {
+//     padding: rem(100px) 0;
+//   }
+//   &__heading{
+//     text-align: center;
+//     font-size: rem(30px);
+//     color: #000;
+//     font-weight: $fw-extra-bold;
+//     font-style: italic;
+//     text-transform: uppercase;
+//     @include mp(large){
+//       font-size: rem(40px);
+//     }
+//   }
+// }
