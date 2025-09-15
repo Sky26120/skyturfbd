@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import SkyTurf from '@/public/images/skyturf.jpg'
+import TimeUpTurf from '@/public/images/timeupturf.jpg'
 import Link from 'next/link'
 
 const Turfs = () => {
@@ -18,6 +19,7 @@ const Turfs = () => {
                                     alt=''
                                     className='our-turfs__turf-image'
                                 />
+                                <span className='our-turfs__image-title'>Sky Turf</span>
                             </div>
                             <h3 className='our-turfs__turf-name'>Sky Turf</h3>
                             <p className='our-turfs__turf-text'>Sky Turf Where Football Meets the Sky</p>
@@ -27,10 +29,11 @@ const Turfs = () => {
                         <div className='our-turfs__turf-wrap'>
                             <div className='our-turfs__turf-image-wrap'>
                                 <Image 
-                                    src={SkyTurf}
+                                    src={TimeUpTurf}
                                     alt=''
                                     className='our-turfs__turf-image'
                                 />
+                                <span className='our-turfs__image-title'>Time up Turf</span>
                             </div>
                             <h3 className='our-turfs__turf-name'>Time Up</h3>
                             <p className='our-turfs__turf-text'>Time Up sports arena</p>
