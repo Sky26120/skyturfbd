@@ -194,22 +194,22 @@
   }
 }
 
-// // // Extra Facilities Section
-.Facilities {
-  padding: rem(50px) 0;
-   @include mp(large) {
-     padding: rem(100px) 0;
-   }
+// // // // Extra Facilities Section
+// .Facilities {
+//   padding: rem(50px) 0;
+//    @include mp(large) {
+//      padding: rem(100px) 0;
+//    }
 
-  &__heading {
-     text-align: center;
-     font-size: rem(30px);
-     color: #000;
-     font-weight: $fw-extra-bold;
-     font-style: italic;
-     text-transform: uppercase;
-     @include mp(large){
-       font-size: rem(40px);
-     }
-  }
- }
+//   &__heading {
+//      text-align: center;
+//      font-size: rem(30px);
+//      color: #000;
+//      font-weight: $fw-extra-bold;
+//      font-style: italic;
+//      text-transform: uppercase;
+//      @include mp(large){
+//        font-size: rem(40px);
+//      }
+//   }
+// }
