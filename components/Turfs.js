@@ -10,6 +10,7 @@ const Turfs = () => {
         <section className='our-turfs'>
             <div className="container">
                 <h2 className='our-turfs__heading'>Our Turfs</h2>
+                <p className='our-turfs__text'>A good turf makes every game smoother and every player better. Step in, feel the field, and own the match</p>
                 <div className="our-turfs__content">
                     <Link href='/' className='our-turfs__wrapper'>
                         <div className="our-turfs__turf-wrap">
