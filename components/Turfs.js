@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
-import SkyTurf from '@/public/images/skyturf.jpg'
-import TimeUpTurf from '@/public/images/timeupturf.jpg'
+import SkyTurf from '@/public/images/skyturf.webp'
+import TimeUpTurf from '@/public/images/timeupturf.webp'
 import Link from 'next/link'
 
 const Turfs = () => {
@@ -10,6 +10,7 @@ const Turfs = () => {
         <section className='our-turfs'>
             <div className="container">
                 <h2 className='our-turfs__heading'>Our Turfs</h2>
+                <p className='our-turfs__text'>A good turf makes every game smoother and every player better. Step in, feel the field, and own the match</p>
                 <div className="our-turfs__content">
                     <Link href='/' className='our-turfs__wrapper'>
                         <div className="our-turfs__turf-wrap">
@@ -18,6 +19,7 @@ const Turfs = () => {
                                     src={SkyTurf}
                                     alt=''
                                     className='our-turfs__turf-image'
+                                    width={600}
                                 />
                                 <span className='our-turfs__image-title'>Sky Turf</span>
                             </div>
@@ -32,6 +34,7 @@ const Turfs = () => {
                                     src={TimeUpTurf}
                                     alt=''
                                     className='our-turfs__turf-image'
+                                    width={600}
                                 />
                                 <span className='our-turfs__image-title'>Time up Turf</span>
                             </div>
