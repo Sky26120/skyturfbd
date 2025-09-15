@@ -32,13 +32,14 @@
     }
 
     &__nav-item {
-        font-size: rem(20px);
+        font-size: rem(14px);
+        font-weight: $fw-bold;
         color: #ffffff;
         text-transform: uppercase;
         padding: rem(39px) rem(10px);
 
         &:hover {
-            text-decoration: underline;
+            color: #EE1B24;
             cursor: pointer;
         }
     }
