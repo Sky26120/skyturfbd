@@ -60,7 +60,7 @@
 .our-turfs {
   padding: rem(50px) 0;
   @include mq(large) {
-    padding: rem(100px);
+    padding: rem(100px) 0;
   }
 
   &__heading {
@@ -86,6 +86,10 @@
       justify-content: center;
       gap: rem(30px);
     }
+  }
+
+  &__wrapper {
+    flex-basis: 50%;
   }
 
   &__turf-wrap {
