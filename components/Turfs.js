@@ -11,7 +11,7 @@ const Turfs = () => {
             <div className="container">
                 <h2 className='our-turfs__heading'>Our Turfs</h2>
                 <div className="our-turfs__content">
-                    <Link href='/'>
+                    <Link href='/' className='our-turfs__wrapper'>
                         <div className="our-turfs__turf-wrap">
                             <div className='our-turfs__turf-image-wrap'>
                                 <Image 
@@ -25,7 +25,7 @@ const Turfs = () => {
                             <p className='our-turfs__turf-text'>Sky Turf Where Football Meets the Sky</p>
                         </div>
                     </Link>
-                    <Link href='/'>
+                    <Link href='/' className='our-turfs__wrapper'>
                         <div className='our-turfs__turf-wrap'>
                             <div className='our-turfs__turf-image-wrap'>
                                 <Image 
