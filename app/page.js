@@ -25,7 +25,6 @@ const home = () => {
 
       <Hero />
       <Turfs />
-      <Facilities/>
     </>
   )
 }

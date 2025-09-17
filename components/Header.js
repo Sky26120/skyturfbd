@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import DarkLogo from '@/public/images/darklogo.png'
 
-const header = () => {
+const Header = () => {
   return (
     <>
         <header className='header'>
@@ -14,11 +14,12 @@ const header = () => {
                       <Image 
                         src={DarkLogo}
                         alt='Sky Turf Logo'
+                        width={2000}
                         className='header__logo'
                       />
                     </Link>
                   </div>
-                  <div className="header__nav-wrap">
+                  <nav className="header__nav-wrap">
                     <Link href='/'>
                       <span className='header__nav-item'>Home</span>
                     </Link>
@@ -38,7 +39,7 @@ const header = () => {
                     <Link href='/signin'>
                       <span className='primary-button'>Sign In</span>
                     </Link>
-                  </div>
+                  </nav>
 
                   {/* <div className="header__mobile-nav-wrap">
 
@@ -50,4 +51,4 @@ const header = () => {
   )
 }
 
-export default header
+export default Header
