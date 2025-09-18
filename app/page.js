@@ -4,6 +4,7 @@ import DarkLogo from '@/public/images/darklogo.png'
 import Hero from '@/components/Hero'
 import Turfs from '@/components/Turfs'
 import Facilities from '@/components/Facilities'
+import Map from '@/components/Map'
 
 const home = () => {
   return (
@@ -25,6 +26,7 @@ const home = () => {
 
       <Hero />
       <Turfs />
+      <Map />
     </>
   )
 }

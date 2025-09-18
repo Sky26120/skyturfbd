@@ -213,3 +213,55 @@
 //      }
 //   }
 // }
+
+// Map Section
+.map {
+  padding-bottom: rem(30px);
+  @include mq(large) {
+    padding-bottom: rem(100px);
+  }
+
+  &__heading {
+    text-align: center;
+    font-size: rem(30px);
+    color: #000000;
+    font-weight: $fw-extra-bold;
+    font-style: italic;
+    text-transform: uppercase;
+    @include mq(large) {
+      font-size: rem(40px);
+    }
+  }
+
+  &__content {
+    margin-top: rem(30px);
+    @include mq(large) {
+      display: flex;
+      justify-content: space-between;
+      gap: rem(30px);
+      margin-top: rem(50px);
+    }
+  }
+
+  &__skyturf {
+    width: 100%;
+  }
+
+  &__timeupturf {
+    width: 100%;
+  }
+
+  &__map {
+    height: 100%;
+    aspect-ratio: 16 / 9;
+    margin-bottom: rem(20px);
+    border-radius: rem(10px);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    @include mq(large) {
+      width: 100%;
+      height: rem(300px);
+      margin-bottom: 0;
+    }
+  }
+}
