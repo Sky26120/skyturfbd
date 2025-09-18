@@ -68,7 +68,7 @@
 
 // Our Turf Section
 .our-turfs {
-  padding: rem(50px) 0;
+  padding: rem(50px) 0 rem(20px);
   @include mq(large) {
     padding: rem(100px) 0;
   }
@@ -258,7 +258,10 @@
 
   &__slider-image-wrap {
     width: 100%;
-    height: rem(150px);
+    height: rem(100px);
+    @include mq(large) {
+      height: rem(150px);
+    }
   }
 
   &__slider-item-image {
@@ -267,6 +270,13 @@
     border-radius: rem(10px);
     object-fit: cover;
   }
-}
 
-// Last Update
+  &__button-wrap {
+    margin-top: rem(30px);
+    display: flex;
+    justify-content: center;
+    @include mq(large) {
+      margin-top: rem(50px);
+    }
+  }
+}

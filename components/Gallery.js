@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useRef, useState } from 'react';
-import { Navigation, Pagination, Scrollbar, A11y, Autoplay, EffectFade } from 'swiper/modules'
+import { Navigation, Pagination, Scrollbar, A11y, Autoplay, EffectFade, FreeMode } from 'swiper/modules'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
 
@@ -9,6 +9,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
+import Link from 'next/link';
 import Image from 'next/image'
 import sliderOne from '@/public/images/1.jpg'
 import sliderTwo from '@/public/images/2.jpg'
@@ -26,13 +27,12 @@ const Gallery = () => {
         <h2 className='primary-heading gallery__heading'>Gallery</h2>
             <div className='gallery__content'>
                 <Swiper  
-                    modules={[Navigation, Pagination, Autoplay]} 
-                    className="mySwiper"
-                    // slidesPerView={5}
-                    // spaceBetween={10}
+                    modules={[Navigation, Pagination, Autoplay, FreeMode]} 
+                    className="mySwiper2"
                     loop={true}
+                    freeMode={true}
                     autoplay={{
-                        // delay: 5000,
+                        delay: 3000,
                         disableOnInteraction: false,
                     }}
                     breakpoints={{
@@ -40,14 +40,10 @@ const Gallery = () => {
                             slidesPerView: 2,
                             spaceBetween: 10,
                         },
-                        768: {
+                        1024: {
                             slidesPerView: 4,
                             spaceBetween: 10,
-                        },
-                        // 1024: {
-                        //     slidesPerView: 5,
-                        //     spaceBetween: 10,
-                        // },
+                        }
                     }}
                     >
 
@@ -132,6 +128,11 @@ const Gallery = () => {
                         </div>
                     </SwiperSlide>
                 </Swiper>
+            </div>
+            <div className='gallery__button-wrap'>
+                <Link href='/gallery'>
+                    <span className='secondary-button'>View More</span>
+                </Link>
             </div>
       </section>
     </>
