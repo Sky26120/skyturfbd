@@ -36,7 +36,7 @@ const Gallery = () => {
                         disableOnInteraction: false,
                     }}
                     breakpoints={{
-                        640: {
+                        340: {
                             slidesPerView: 2,
                             spaceBetween: 10,
                         },
