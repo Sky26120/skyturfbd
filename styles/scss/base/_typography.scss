@@ -12,3 +12,15 @@ body {
   position: relative;
   overflow-x: hidden;
 }
+
+.primary-heading {
+  text-align: center;
+  font-size: rem(30px);
+  color: #000000;
+  font-weight: $fw-extra-bold;
+  font-style: italic;
+  text-transform: uppercase;
+  @include mq(large) {
+    font-size: rem(40px);
+  }
+}

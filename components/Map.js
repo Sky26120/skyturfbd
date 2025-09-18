@@ -10,7 +10,7 @@ const Map = () => {
     <>
         <section className='map'>
             <div className="container">
-                <h2 className='map__heading'>Our Location</h2>
+                <h2 className='primary-heading map__heading'>Our Location</h2>
                 <div className="map__content">
                     <div className='map__skyturf'>
                         <iframe

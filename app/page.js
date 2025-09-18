@@ -5,6 +5,7 @@ import Hero from '@/components/Hero'
 import Turfs from '@/components/Turfs'
 import Facilities from '@/components/Facilities'
 import Map from '@/components/Map'
+import Gallery from '@/components/Gallery'
 
 const home = () => {
   return (
@@ -27,6 +28,7 @@ const home = () => {
       <Hero />
       <Turfs />
       <Map />
+      <Gallery />
     </>
   )
 }
