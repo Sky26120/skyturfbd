@@ -20,6 +20,7 @@ const Turfs = () => {
                                     alt=''
                                     className='our-turfs__turf-image'
                                     width={600}
+                                    loading='lazy'
                                 />
                                 <span className='our-turfs__image-title'>Sky Turf</span>
                             </div>
@@ -35,6 +36,7 @@ const Turfs = () => {
                                     alt=''
                                     className='our-turfs__turf-image'
                                     width={600}
+                                    loading='lazy'
                                 />
                                 <span className='our-turfs__image-title'>Time up Turf</span>
                             </div>
