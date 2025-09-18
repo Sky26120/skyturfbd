@@ -76,13 +76,27 @@
         line-height: 1.3;
     }
 
+    &__contact-wrap {
+        display: flex;
+        align-items: center;
+        gap: rem(10px);
+        margin-bottom: rem(10px);
+    }
+
+    &__content-text {
+        color: $fc-primary--white;
+        font-size: rem($fs-secondary-text--small);
+        display: inline-block;
+        margin-bottom: rem(2px);
+    }
+
     &__social-wrap {
-        margin-top: rem(30px);
+        margin-top: rem(20px);
         display: flex;
         align-items: center;
         gap: rem(15px);
         @include mq(large) {
-            margin-top: rem(40px);
+            margin-top: rem(30px);
         }
     }
 

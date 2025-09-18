@@ -12,6 +12,7 @@ import 'swiper/css/pagination'
 import Image from 'next/image'
 import HeroSlideOne from '@/public/images/heroskyturf.webp'
 import HeroSlideTwo from '@/public/images/herotimeupturf.webp'
+import SlideOne from '@/public/images/slideone.jpg'
 
 const Hero = () => {
   return (
@@ -23,8 +24,22 @@ const Hero = () => {
           className="mySwiper"
           slidesPerView={1}
           loop={true}
+          autoplay={{
+            delay: 5000,
+            disableOnInteraction: false,
+          }} 
         >
 
+          <SwiperSlide>
+            <div className='hero__slider-image-wrap'>
+              <Image 
+                src={SlideOne}
+                alt=''
+                width={1500}
+                className='hero__slider-item-image'
+              />
+            </div>
+          </SwiperSlide>
           <SwiperSlide>
             <div className='hero__slider-image-wrap'>
               <Image 

@@ -63,6 +63,24 @@ const Footer = () => {
                     <div className='footer__column'>
                         <h3 className='footer__column-heading'>LOCATION</h3>
                         <address className='footer__address-text'>1 by 1, Meghna Shopping Complex, Rafikul Islam Road, Gobindapur, Sanir Akhra 1236 Dhaka, Bangladesh</address>
+                        <div className='footer__contact-wrap'>
+                            <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.556 10.906L12.101 11.359C12.101 11.359 11.018 12.435 8.063 9.49698C5.108 6.55898 6.191 5.48298 6.191 5.48298L6.477 5.19698C7.184 4.49498 7.251 3.36698 6.634 2.54298L5.374 0.859979C4.61 -0.160021 3.135 -0.29502 2.26 0.57498L0.690002 2.13498C0.257002 2.56698 -0.0329985 3.12498 0.00200151 3.74498C0.0920015 5.33198 0.810001 8.74498 4.814 12.727C9.061 16.949 13.046 17.117 14.675 16.965C15.191 16.917 15.639 16.655 16 16.295L17.42 14.883C18.38 13.93 18.11 12.295 16.882 11.628L14.972 10.589C14.166 10.152 13.186 10.28 12.556 10.906Z" fill="white"/>
+                            </svg>
+                            <Link href='tel: 01887876580'><span className='footer__content-text'>Sky Turf : 01887876580</span></Link>
+                        </div>
+                        <div className='footer__contact-wrap'>
+                            <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.556 10.906L12.101 11.359C12.101 11.359 11.018 12.435 8.063 9.49698C5.108 6.55898 6.191 5.48298 6.191 5.48298L6.477 5.19698C7.184 4.49498 7.251 3.36698 6.634 2.54298L5.374 0.859979C4.61 -0.160021 3.135 -0.29502 2.26 0.57498L0.690002 2.13498C0.257002 2.56698 -0.0329985 3.12498 0.00200151 3.74498C0.0920015 5.33198 0.810001 8.74498 4.814 12.727C9.061 16.949 13.046 17.117 14.675 16.965C15.191 16.917 15.639 16.655 16 16.295L17.42 14.883C18.38 13.93 18.11 12.295 16.882 11.628L14.972 10.589C14.166 10.152 13.186 10.28 12.556 10.906Z" fill="white"/>
+                            </svg>
+                            <Link href='tel: 01766556206'><span className='footer__content-text'>Time Up Turf : 01766556206</span></Link>
+                        </div>
+                        <div className='footer__contact-wrap'>
+                            <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.616 14C1.15533 14 0.771 13.846 0.463 13.538C0.155 13.23 0.000666667 12.8453 0 12.384V1.616C0 1.15533 0.154333 0.771 0.463 0.463C0.771667 0.155 1.15567 0.000666667 1.615 0H16.385C16.845 0 17.229 0.154333 17.537 0.463C17.845 0.771666 17.9993 1.156 18 1.616V12.385C18 12.845 17.8457 13.2293 17.537 13.538C17.2283 13.8467 16.8443 14.0007 16.385 14H1.616ZM9 7.116L17 1.885L16.692 1L9 6L1.308 1L1 1.885L9 7.116Z" fill="white"/>
+                            </svg>
+                            <Link href='mailto: skyturf0@gmail.com'><span className='footer__content-text'>skyturf0@gmail.com</span></Link>
+                        </div>
                         <div className='footer__social-wrap'>
                             <Link href='https://www.facebook.com/skyturf1' target='_blank' className='footer__social-item-link'>
                                 <span className='visually-hidden'>facebook</span>
