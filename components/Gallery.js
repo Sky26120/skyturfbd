@@ -16,8 +16,8 @@ import sliderTwo from '@/public/images/2.jpg'
 import sliderThree from '@/public/images/3.jpg'
 import sliderFour from '@/public/images/4.jpg'
 import sliderFive from '@/public/images/5.jpg'
-import sliderSix from '@/public/images/6.jpg'
-import sliderSeven from '@/public/images/7.jpg'
+import sliderSix from '@/public/images/6.JPG'
+import sliderSeven from '@/public/images/7.JPG'
 import sliderEight from '@/public/images/8.jpg'
 
 const Gallery = () => {
