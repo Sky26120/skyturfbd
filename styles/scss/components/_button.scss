@@ -1,18 +1,18 @@
 .primary-button {
     display: table;
     padding: rem(10px) rem(40px);
-    background: #ffffff;
-    color: #0059A9;
+    background: transparent;
+    color: #ffffff;
     border-radius: rem(5px);
     text-transform: uppercase;
     font-size: rem(14px);
-    border: 1px solid transparent;
+    border: 1px solid #ffffff;
     transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
     &:hover {
-        border: 1px solid #ffffff;
-        background: transparent;
-        color: #ffffff;
+        border: 1px solid transparent;
+        background: #ffffff;
+        color: #0059A9;
         cursor: pointer;
     }
 }

@@ -54,6 +54,7 @@ const Gallery = () => {
                                 alt=''
                                 width={500}
                                 className='gallery__slider-item-image'
+                                loading='lazy'
                             />
                         </div>
                     </SwiperSlide>
@@ -64,6 +65,7 @@ const Gallery = () => {
                                 alt=''
                                 width={500}
                                 className='gallery__slider-item-image'
+                                loading='lazy'
                             />
                         </div>
                     </SwiperSlide>
@@ -74,6 +76,7 @@ const Gallery = () => {
                                 alt=''
                                 width={500}
                                 className='gallery__slider-item-image'
+                                loading='lazy'
                             />
                         </div>
                     </SwiperSlide>
@@ -84,6 +87,7 @@ const Gallery = () => {
                                 alt=''
                                 width={500}
                                 className='gallery__slider-item-image'
+                                loading='lazy'
                             />
                         </div>
                     </SwiperSlide>
@@ -94,6 +98,7 @@ const Gallery = () => {
                                 alt=''
                                 width={500}
                                 className='gallery__slider-item-image'
+                                loading='lazy'
                             />
                         </div>
                     </SwiperSlide>
@@ -104,6 +109,7 @@ const Gallery = () => {
                                 alt=''
                                 width={500}
                                 className='gallery__slider-item-image'
+                                loading='lazy'
                             />
                         </div>
                     </SwiperSlide>
@@ -114,6 +120,7 @@ const Gallery = () => {
                                 alt=''
                                 width={500}
                                 className='gallery__slider-item-image'
+                                loading='lazy'
                             />
                         </div>
                     </SwiperSlide>
@@ -124,6 +131,7 @@ const Gallery = () => {
                                 alt=''
                                 width={500}
                                 className='gallery__slider-item-image'
+                                loading='lazy'
                             />
                         </div>
                     </SwiperSlide>
