@@ -1,44 +1,104 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
 import Link from "next/link";
 
-export default function Signup() {
-  const [form, setForm] = useState({ name: "", phone: "", email: "", password: "", confirm: "" });
-  const [error, setError] = useState("");
-  const router = useRouter();
+class Signup extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      phone: "",
+      email: "",
+      password: "",
+      confirm: "",
+      error: "",
+    };
+  }
 
-  const handleSubmit = async (e) => {
+  handleChange = (e) => {
+    const { name, value } = e.target;   // destructure kora lagbe
+    this.setState({ [name]: value });   // state properly update hobe
+  };
+
+  handleSubmit = async (e) => {
     e.preventDefault();
-    if (form.password !== form.confirm) return setError("Passwords do not match");
+    const { name, phone, email, password, confirm } = this.state;
+
+    if (password !== confirm) {
+      this.setState({ error: "Passwords do not match" });
+      return;
+    }
 
     try {
       const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ name, phone, email, password }),
       });
+
       const data = await res.json();
-      if (!res.ok) return setError(data.error || "Signup failed");
-      router.push("/signin");
+      if (!res.ok) {
+        this.setState({ error: data.error || "Signup failed" });
+      } else {
+        window.location.href = "/signin"; // redirect
+      }
     } catch {
-      setError("Something went wrong");
+      this.setState({ error: "Something went wrong" });
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <input placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-      <input placeholder="Phone" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
-      <input type="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-      <input type="password" placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
-      <input type="password" placeholder="Confirm Password" value={form.confirm} onChange={(e) => setForm({ ...form, confirm: e.target.value })} />
-      <button type="submit">Signup</button>
-      <Link href='/signin'>
-        <span>Sign In</span>
-      </Link>
-    </form>
-  );
+  render() {
+    const { name, phone, email, password, confirm, error } = this.state;
+
+    return (
+      <form onSubmit={this.handleSubmit}>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={name}
+          onChange={this.handleChange}
+        />
+        <input
+          type="text"
+          name="phone"
+          placeholder="Phone"
+          value={phone}
+          onChange={this.handleChange}
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={email}
+          onChange={this.handleChange}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={password}
+          onChange={this.handleChange}
+        />
+        <input
+          type="password"
+          name="confirm"
+          placeholder="Confirm Password"
+          value={confirm}
+          onChange={this.handleChange}
+        />
+
+        <button type="submit">Signup</button>
+
+        <Link href="/signin">
+          <span style={{ marginLeft: "10px", cursor: "pointer" }}>Sign In</span>
+        </Link>
+      </form>
+    );
+  }
 }
+
+export default Signup;
