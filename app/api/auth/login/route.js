@@ -1,41 +1,26 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export async function POST(req) {
   try {
     const { email, password } = await req.json();
-
-    if (!email || !password) {
-      return NextResponse.json({ error: "Email and password required" }, { status: 400 });
-    }
-
     const client = await clientPromise;
-    const db = client.db(process.env.DB_NAME);
-    const users = db.collection("users");
+    const db = client.db("skyturf");
+    const user = await db.collection("users").findOne({ email });
+    if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-    const user = await users.findOne({ email });
-    if (!user) return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
 
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+    const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1d" });
 
-    const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
-
-    const res = NextResponse.json({ message: "Login successful", token });
-    res.cookies.set(process.env.COOKIE_NAME, token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7,
-    });
+    const res = NextResponse.json({ success: true, user: { name: user.name, email: user.email, phone: user.phone } });
+    res.cookies.set("token", token, { httpOnly: true, secure: process.env.NODE_ENV !== "development", sameSite: "strict", path: "/" });
 
     return res;
-  } catch (err) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch {
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

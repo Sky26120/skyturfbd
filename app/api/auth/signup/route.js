@@ -1,27 +1,21 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 
 export async function POST(req) {
   try {
     const { name, email, phone, password } = await req.json();
 
-    if (!name || !email || !password) {
-      return NextResponse.json({ error: "Name, email and password required" }, { status: 400 });
-    }
-
     const client = await clientPromise;
-    const db = client.db(process.env.DB_NAME);
-    const users = db.collection("users");
+    const db = client.db("skyturf");
+    const existing = await db.collection("users").findOne({ email });
+    if (existing) return NextResponse.json({ error: "Email already exists" }, { status: 400 });
 
-    const existing = await users.findOne({ email });
-    if (existing) return NextResponse.json({ error: "Email already exists" }, { status: 409 });
+    const hash = await bcrypt.hash(password, 10);
+    await db.collection("users").insertOne({ name, email, phone, password: hash });
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await users.insertOne({ name, email, phone, password: hashedPassword, createdAt: new Date() });
-
-    return NextResponse.json({ message: "User registered successfully" });
+    return NextResponse.json({ success: true });
   } catch (err) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

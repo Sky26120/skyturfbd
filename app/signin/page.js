@@ -1,39 +1,55 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
 import Link from "next/link";
 
-export default function Signin() {
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
-  const router = useRouter();
+class Signin extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { email: "", password: "", error: "" };
+  }
 
-  const handleSubmit = async (e) => {
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleSubmit = async (e) => {
     e.preventDefault();
+    const { email, password } = this.state;
+
     try {
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ email, password }),
       });
+
       const data = await res.json();
-      if (!res.ok) return setError(data.error || "Login failed");
-      router.push("/dashboard");
+      if (!res.ok) {
+        this.setState({ error: data.error || "Login failed" });
+      } else {
+        window.location.href = "/dashboard";
+      }
     } catch {
-      setError("Something went wrong");
+      this.setState({ error: "Something went wrong" });
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <input type="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-      <input type="password" placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
-      <button type="submit">Login</button>
-      <Link href='/signup'>
-        <span>Sign Up</span>
-      </Link>
-    </form>
-  );
+  render() {
+    const { email, password, error } = this.state;
+
+    return (
+      <form onSubmit={this.handleSubmit}>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <input name="email" type="email" placeholder="Email" value={email} onChange={this.handleChange} />
+        <input name="password" type="password" placeholder="Password" value={password} onChange={this.handleChange} />
+        <button type="submit">Login</button>
+        <Link href='/signup'>
+          <span>Sign Up</span>
+        </Link>
+      </form>
+    );
+  }
 }
+
+export default Signin;
