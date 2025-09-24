@@ -1,9 +1,8 @@
 import React from 'react'
-import Image from 'next/image'
-import DarkLogo from '@/public/images/darklogo.png'
+// import Image from 'next/image'
+// import DarkLogo from '@/public/images/darklogo.png'
 import Hero from '@/components/Hero'
 import Turfs from '@/components/Turfs'
-import Facilities from '@/components/Facilities'
 import Map from '@/components/Map'
 import Gallery from '@/components/Gallery'
 
