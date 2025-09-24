@@ -1,7 +1,7 @@
 "use client";
-
 import React from "react";
 import Link from "next/link";
+import Router from "next/router";
 
 class Signin extends React.Component {
   state = { email: "", password: "", error: "" };
@@ -13,18 +13,19 @@ class Signin extends React.Component {
     const { email, password } = this.state;
 
     try {
+      // ✅ Live-ready fetch with credentials
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
-        credentials: "include", // ✅ cookies পাঠানোর জন্য
+        credentials: "include", // cookies পাঠানোর জন্য
       });
 
       const data = await res.json();
       if (!res.ok) return this.setState({ error: data.error || "Login failed" });
 
-      // login success → dashboard redirect
-      window.location.href = "/dashboard";
+      // login successful → redirect to dashboard
+      Router.push("/dashboard");
     } catch {
       this.setState({ error: "Something went wrong" });
     }
@@ -36,10 +37,28 @@ class Signin extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        <input name="email" type="email" value={email} onChange={this.handleChange} placeholder="Email" />
-        <input name="password" type="password" value={password} onChange={this.handleChange} placeholder="Password" />
+
+        <input
+          name="email"
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={this.handleChange}
+        />
+
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={this.handleChange}
+        />
+
         <button type="submit">Login</button>
-        <Link href="/signup">Sign Up</Link>
+
+        <p>
+          Don't have an account? <Link href="/signup">Sign Up</Link>
+        </p>
       </form>
     );
   }
