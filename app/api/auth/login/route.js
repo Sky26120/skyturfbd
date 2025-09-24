@@ -1,26 +1,28 @@
-import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
     const { email, password } = await req.json();
     const client = await clientPromise;
     const db = client.db("skyturf");
+
     const user = await db.collection("users").findOne({ email });
-    if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
+    if (!user) return NextResponse.json({ error: "User not found" }, { status: 400 });
 
-    const valid = await bcrypt.compare(password, user.password);
-    if (!valid) return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return NextResponse.json({ error: "Invalid credentials" }, { status: 400 });
 
-    const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1d" });
+    const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
 
-    const res = NextResponse.json({ success: true, user: { name: user.name, email: user.email, phone: user.phone } });
-    res.cookies.set("token", token, { httpOnly: true, secure: process.env.NODE_ENV !== "development", sameSite: "strict", path: "/" });
-
+    const res = NextResponse.json({ message: "Login successful" });
+    res.cookies.set("token", token, { httpOnly: true, maxAge: 3600 });
     return res;
-  } catch {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: "Login failed" }, { status: 500 });
   }
 }

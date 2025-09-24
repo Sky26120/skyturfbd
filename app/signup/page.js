@@ -4,31 +4,14 @@ import React from "react";
 import Link from "next/link";
 
 class Signup extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "",
-      phone: "",
-      email: "",
-      password: "",
-      confirm: "",
-      error: "",
-    };
-  }
+  state = { name: "", phone: "", email: "", password: "", confirm: "", error: "" };
 
-  handleChange = (e) => {
-    const { name, value } = e.target;   // destructure kora lagbe
-    this.setState({ [name]: value });   // state properly update hobe
-  };
+  handleChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
   handleSubmit = async (e) => {
     e.preventDefault();
     const { name, phone, email, password, confirm } = this.state;
-
-    if (password !== confirm) {
-      this.setState({ error: "Passwords do not match" });
-      return;
-    }
+    if (password !== confirm) return this.setState({ error: "Passwords do not match" });
 
     try {
       const res = await fetch("/api/auth/signup", {
@@ -36,13 +19,9 @@ class Signup extends React.Component {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, phone, email, password }),
       });
-
       const data = await res.json();
-      if (!res.ok) {
-        this.setState({ error: data.error || "Signup failed" });
-      } else {
-        window.location.href = "/signin"; // redirect
-      }
+      if (!res.ok) return this.setState({ error: data.error });
+      window.location.href = "/signin";
     } catch {
       this.setState({ error: "Something went wrong" });
     }
@@ -50,52 +29,16 @@ class Signup extends React.Component {
 
   render() {
     const { name, phone, email, password, confirm, error } = this.state;
-
     return (
       <form onSubmit={this.handleSubmit}>
         {error && <p style={{ color: "red" }}>{error}</p>}
-
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={name}
-          onChange={this.handleChange}
-        />
-        <input
-          type="text"
-          name="phone"
-          placeholder="Phone"
-          value={phone}
-          onChange={this.handleChange}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={email}
-          onChange={this.handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={password}
-          onChange={this.handleChange}
-        />
-        <input
-          type="password"
-          name="confirm"
-          placeholder="Confirm Password"
-          value={confirm}
-          onChange={this.handleChange}
-        />
-
+        <input name="name" value={name} onChange={this.handleChange} placeholder="Name" />
+        <input name="phone" value={phone} onChange={this.handleChange} placeholder="Phone" />
+        <input name="email" type="email" value={email} onChange={this.handleChange} placeholder="Email" />
+        <input name="password" type="password" value={password} onChange={this.handleChange} placeholder="Password" />
+        <input name="confirm" type="password" value={confirm} onChange={this.handleChange} placeholder="Confirm Password" />
         <button type="submit">Signup</button>
-
-        <Link href="/signin">
-          <span style={{ marginLeft: "10px", cursor: "pointer" }}>Sign In</span>
-        </Link>
+        <Link href="/signin">Sign In</Link>
       </form>
     );
   }
