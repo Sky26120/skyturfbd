@@ -24,11 +24,12 @@ export async function POST(req) {
     // Cookie set with dev/prod safe flags
     res.cookies.set("token", token, {
       httpOnly: true,
-      secure: true, // dev: false, prod: true
-      maxAge: 60 * 60, // 1 hour
-      path: "/",
-      sameSite: "none",
+      secure: true,       // live HTTPS
+      path: "/",          // root path
+      sameSite: "lax",
+      maxAge: 3600,
     });
+
 
     return res;
   } catch (err) {
