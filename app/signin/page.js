@@ -18,7 +18,7 @@ class Signin extends React.Component {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
-        credentials: "include", // cookies পাঠানোর জন্য
+        credentials: "include", // ✅ live cookie attach করার জন্য
       });
 
       const data = await res.json();

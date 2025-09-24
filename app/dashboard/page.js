@@ -1,52 +1,65 @@
 "use client";
 
 import React from "react";
-import Router from "next/router";
 
 class Dashboard extends React.Component {
-  state = { user: null, loading: true };
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: null,
+      loading: true,
+    };
+  }
 
-  componentDidMount = async () => {
+  async componentDidMount() {
     try {
-      // fetch /me API with credentials to include cookie
-      const res = await fetch("/api/auth/me", { credentials: "include" });
-      if (res.ok) {
-        const data = await res.json();
-        this.setState({ user: data.user, loading: false });
-      } else {
-        // not logged in → redirect to signin
-        Router.push("/signin");
+      // /api/auth/me থেকে logged-in user info fetch
+      const res = await fetch("/api/auth/me", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // cookie send করার জন্য
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.user) {
+        // যদি login না থাকে, login page এ redirect
+        window.location.href = "/signin";
+        return;
       }
+
+      // user state update
+      this.setState({ user: data.user, loading: false });
     } catch (err) {
-      Router.push("/signin");
+      console.error("Fetch user error:", err);
+      window.location.href = "/signin";
     }
-  };
+  }
 
   handleLogout = async () => {
     try {
-      await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
-      Router.push("/signin");
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+      window.location.href = "/signin";
     } catch (err) {
-      console.error("Logout failed", err);
+      console.error("Logout error:", err);
     }
   };
 
   render() {
     const { user, loading } = this.state;
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) {
+      return <p>Loading...</p>;
+    }
 
     return (
       <div>
-        <h1>Dashboard</h1>
-        {user ? (
-          <>
-            <p>Welcome, {user.email}</p>
-            <button onClick={this.handleLogout}>Logout</button>
-          </>
-        ) : (
-          <p>Redirecting...</p>
-        )}
+        <h1>Welcome, {user.name}</h1>
+        <p>This page is protected. Only logged-in users can see this.</p>
+        <button onClick={this.handleLogout}>Logout</button>
       </div>
     );
   }
