@@ -20,9 +20,19 @@ export async function POST(req) {
     });
 
     const res = NextResponse.json({ message: "Login successful" });
-    res.cookies.set("token", token, { httpOnly: true, maxAge: 3600, path: "/" });
+
+    // Cookie set with dev/prod safe flags
+    res.cookies.set("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // dev: false, prod: true
+      maxAge: 60 * 60, // 1 hour
+      path: "/",
+      sameSite: "lax",
+    });
+
     return res;
   } catch (err) {
+    console.error("Login error:", err);
     return NextResponse.json({ error: "Login failed" }, { status: 500 });
   }
 }
