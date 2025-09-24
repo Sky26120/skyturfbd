@@ -20,7 +20,7 @@ export async function POST(req) {
     });
 
     const res = NextResponse.json({ message: "Login successful" });
-    res.cookies.set("token", token, { httpOnly: true, maxAge: 3600 });
+    res.cookies.set("token", token, { httpOnly: true, maxAge: 3600, path: "/" });
     return res;
   } catch (err) {
     return NextResponse.json({ error: "Login failed" }, { status: 500 });
