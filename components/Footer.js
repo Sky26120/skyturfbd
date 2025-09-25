@@ -29,16 +29,16 @@ const Footer = () => {
                     <div className='footer__column'>
                         <h3 className='footer__column-heading'>SUPPORT AND RESOURCES</h3>
                         <nav className='footer__column-nav-wrap'>
-                            <Link href=''>
+                            <Link href='/contactus'>
                                 <span className='footer__column-nav-item'>Contact Us</span>
                             </Link>
-                            <Link href=''>
+                            <Link href='/refund'>
                                 <span className='footer__column-nav-item'>Refund And Cancellation</span>
                             </Link>
-                            <Link href=''>
+                            <Link href='/facilities'>
                                 <span className='footer__column-nav-item'>Facilities</span>
                             </Link>
-                            <Link href=''>
+                            <Link href='/gallery'>
                                 <span className='footer__column-nav-item'>Photo Gallery</span>
                             </Link>
                         </nav>
@@ -46,16 +46,16 @@ const Footer = () => {
                     <div className='footer__column'>
                         <h3 className='footer__column-heading'>INFORMATION</h3>
                         <nav className='footer__column-nav-wrap'>
-                            <Link href='' className='footer__column-nav-item-link'>
+                            <Link href='/aboutus' className='footer__column-nav-item-link'>
                                 <span className='footer__column-nav-item'>About Us</span>
                             </Link>
-                            <Link href='' className='footer__column-nav-item-link'>
+                            <Link href='/dashboard' className='footer__column-nav-item-link'>
                                 <span className='footer__column-nav-item'>My Account</span>
                             </Link>
-                            <Link href='' className='footer__column-nav-item-link'>
+                            <Link href='/privacypolicy' className='footer__column-nav-item-link'>
                                 <span className='footer__column-nav-item'>Privacy Policy</span>
                             </Link>
-                            <Link href='' className='footer__column-nav-item-link'>
+                            <Link href='/termsconditions' className='footer__column-nav-item-link'>
                                 <span className='footer__column-nav-item'>Terms And Conditions</span>
                             </Link>
                         </nav>
