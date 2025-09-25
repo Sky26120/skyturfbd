@@ -23,7 +23,7 @@ const Header = () => {
         gsap.to(header, {
           y: 0,
           duration: 0.8,
-          ease: "power3.out",
+          ease: "power3.in",
           onStart: () => {
             header.style.position = "sticky";
             header.style.top = "0";
