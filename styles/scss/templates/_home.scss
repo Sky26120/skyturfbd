@@ -42,6 +42,10 @@
 
 // Hero Section
 .hero {
+  // padding-top: rem(69px);
+  // @include mq(large) {
+  //   padding-top: rem(98px);
+  // }
   &__slider-image-wrap {
     height: rem(160px);
     @include mq(large) {
