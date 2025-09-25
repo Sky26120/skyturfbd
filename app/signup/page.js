@@ -30,16 +30,22 @@ class Signup extends React.Component {
   render() {
     const { name, phone, email, password, confirm, error } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <input name="name" value={name} onChange={this.handleChange} placeholder="Name" />
-        <input name="phone" value={phone} onChange={this.handleChange} placeholder="Phone" />
-        <input name="email" type="email" value={email} onChange={this.handleChange} placeholder="Email" />
-        <input name="password" type="password" value={password} onChange={this.handleChange} placeholder="Password" />
-        <input name="confirm" type="password" value={confirm} onChange={this.handleChange} placeholder="Confirm Password" />
-        <button type="submit">Signup</button>
-        <Link href="/signin">Sign In</Link>
-      </form>
+      <>
+        <section className="signup">
+          <div className="container">
+            <form className="signup__form" onSubmit={this.handleSubmit}>
+              {error && <p style={{ color: "red" }}>{error}</p>}
+              <input className="signup__form-input" name="name" value={name} onChange={this.handleChange} placeholder="Name" />
+              <input className="signup__form-input" name="phone" value={phone} onChange={this.handleChange} placeholder="Phone" />
+              <input className="signup__form-input" name="email" type="email" value={email} onChange={this.handleChange} placeholder="Email" />
+              <input className="signup__form-input" name="password" type="password" value={password} onChange={this.handleChange} placeholder="Password" />
+              <input className="signup__form-input" name="confirm" type="password" value={confirm} onChange={this.handleChange} placeholder="Confirm Password" />
+              <button className="secondary-button" type="submit">Sign up</button>
+              <Link href="/signin">Sign In</Link>
+            </form>
+          </div>
+        </section>
+      </>
     );
   }
 }

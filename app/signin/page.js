@@ -35,31 +35,39 @@ class Signin extends React.Component {
     const { email, password, error } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+      <>
+        <section className="signin">
+          <div className="container">
+            <form className="signin__form" onSubmit={this.handleSubmit}>
+              {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={this.handleChange}
-        />
+              <input
+                className="signin__form-input"
+                name="email"
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={this.handleChange}
+              />
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={this.handleChange}
-        />
+              <input
+                className="signin__form-input"
+                name="password"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={this.handleChange}
+              />
 
-        <button type="submit">Login</button>
+              <button className="secondary-button" type="submit">Login</button>
 
-        <p>
-          Do not have an account? <Link href="/signup">Sign Up</Link>
-        </p>
-      </form>
+              <p>
+                Do not have an account? <Link href="/signup">Sign Up</Link>
+              </p>
+            </form>
+          </div>
+        </section>
+      </>
     );
   }
 }
