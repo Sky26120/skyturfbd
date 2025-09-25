@@ -1,0 +1,24 @@
+.signup {
+    padding: rem(50px) 0;
+    @include mq(large) {
+        padding: rem(100px) 0;
+    }
+
+    &__form {
+        max-width: rem(480px);
+        width: 100%;
+        margin: auto;
+        padding: rem(40px);
+        box-shadow: 0 0 15px #ccc;
+        border-radius: rem(10px);
+    }
+
+    &__form-input {
+        display: block;
+        width: 100%;
+        margin-bottom: rem(10px);
+        padding: rem(10px) rem(15px);
+        border-radius: rem(5px);
+        border: 1px solid #ccc;
+    }
+}
