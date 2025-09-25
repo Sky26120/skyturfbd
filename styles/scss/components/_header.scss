@@ -6,6 +6,12 @@
     // width: 100%;
     // z-index: 999;
     // transition: background-color 0.3s ease;
+    // position: fixed;
+    // inset: 0;
+    @include mq(large) {
+        position: relative;
+    }
+
 
     &__content {
         display: flex;
@@ -27,12 +33,30 @@
     }
 
     &__nav-wrap {
-        display: none;
+        overflow-y: scroll;
         @include mq(large) {
             display: flex;
             align-items: center;
             justify-content: flex-end;
             gap: rem(20px);
+            overflow: hidden;
+        }
+
+        &--desktop {
+            display: none;
+            @include mq(large) {
+                display: flex;
+            }
+        }
+
+        &--mobile {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50px;
+            min-height: 100vh;
+            z-index: 999;
+            overflow-y: scroll !important;
         }
     }
 
@@ -41,12 +65,69 @@
         font-weight: $fw-bold;
         color: #ffffff;
         text-transform: uppercase;
-        padding: rem(39px) rem(10px);
+        padding: rem(20px) rem(10px);
+        display: block;
+        text-align: center;
+        @include mq(large) {
+            padding: rem(39px) rem(10px);
+        }
 
         &:hover {
             color: #EE1B24;
             cursor: pointer;
         }
+    }
+
+    &__nav-item-button {
+        &--mobile {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: rem(20px);
+        }
+    }
+
+    &__mobile-menu {
+        width: rem(30px);
+        height: rem(20px);
+        @include mq(large) {
+            display: none;
+        }
+    }
+
+    &__mobile-menu-bar {
+        width: 100%;
+        height: 100%;
+    }
+
+    &__mobile-menu-cross-wrap {
+        width: rem(20px);
+        height: rem(20px);
+        @include mq(large) {
+            display: none;
+        }
+    }
+
+    &__mobile-menu-cross {
+        width: 100%;
+        height: 100%;
+    }
+
+    &__mobile {
+        position: fixed;
+        inset: 0;
+        background: #0059A9;
+        z-index: 999;
+        overflow-y: scroll;
+        padding: rem(10px) rem(20px) rem(30px);
+        @include mq(large) {
+            display: none;
+        }
+    }
+
+    &__mobile-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 }
 
