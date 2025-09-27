@@ -7,20 +7,20 @@ import Image from "next/image";
 import SignupImage from "@/public/images/sky-signin.jpg"
 
 class Signin extends React.Component {
-  state = { email: "", password: "", error: "" };
+  state = { phone: "", password: "", error: "" };
 
   handleChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, password } = this.state;
+    const { phone, password } = this.state;
 
     try {
       // ✅ Live-ready fetch with credentials
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ phone, password }),
         credentials: "include", // ✅ live cookie attach করার জন্য
       });
 
