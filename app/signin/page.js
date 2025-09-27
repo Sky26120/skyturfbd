@@ -2,6 +2,9 @@
 import React from "react";
 import Link from "next/link";
 import Router from "next/router";
+import Image from "next/image";
+
+import SignupImage from "@/public/images/sky-signin.jpg"
 
 class Signin extends React.Component {
   state = { email: "", password: "", error: "" };
@@ -38,33 +41,54 @@ class Signin extends React.Component {
       <>
         <section className="signin">
           <div className="container">
-            <form className="signin__form" onSubmit={this.handleSubmit}>
-              {error && <p style={{ color: "red" }}>{error}</p>}
+            <div className="signin__content">
+              <div className="signin__image-wrap">
+                <Image 
+                  src={SignupImage}
+                  alt=""
+                  width={500}
+                  className="signin__image"
+                />
+              </div>
+              <div className="signin__form-wrap">
+                <h3 className="secondary-heading signin__heading">Welcome to Sky Turf</h3>
+                <p className="primary-text signin__text">Sky Turf Where Football Meets the Sky</p>
+                <form className="signin__form" onSubmit={this.handleSubmit}>
+                  {error && <p style={{ color: "red" }}>{error}</p>}
+                  <label className="signin__form-label" htmlFor="email">Email</label>
+                  <input
+                    className="signin__form-input"
+                    name="email"
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={this.handleChange}
+                    id="email"
+                  />
 
-              <input
-                className="signin__form-input"
-                name="email"
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={this.handleChange}
-              />
+                  <label className="signin__form-label" htmlFor="password">Password</label>
+                  <input
+                    className="signin__form-input"
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={this.handleChange}
+                    id="password"
+                  />
+                  <Link href="">
+                    <span className="signin__forgot-pass-text">Forgot Password</span>
+                  </Link>
 
-              <input
-                className="signin__form-input"
-                name="password"
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={this.handleChange}
-              />
+                  <button className="secondary-button signin__button" type="submit">Login</button>
 
-              <button className="secondary-button" type="submit">Login</button>
-
-              <p>
-                Do not have an account? <Link href="/signup">Sign Up</Link>
-              </p>
-            </form>
+                  <p className="signin__acc-text">
+                    Do not have an account? <Link href="/signup"><span className="signin__link-text">Sign Up</span></Link>
+                  </p>
+                </form>
+              </div>
+            </div>
+            
           </div>
         </section>
       </>
