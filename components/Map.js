@@ -23,6 +23,8 @@ const Map = () => {
                             referrerPolicy="no-referrer-when-downgrade"
                             className='map__map'
                         ></iframe>
+                        <h3 className='our-turfs__turf-name'>Sky Turf</h3>
+                        <p className='our-turfs__turf-text'>Sky Turf Where Football Meets the Sky</p>
                     </div>
                     <div className='map__timeupturf'>
                         <iframe
@@ -35,6 +37,8 @@ const Map = () => {
                             referrerPolicy="no-referrer-when-downgrade"
                             className='map__map'
                         ></iframe>
+                        <h3 className='our-turfs__turf-name'>Time Up</h3>
+                        <p className='our-turfs__turf-text'>Time Up sports arena</p>
                     </div>
                 </div>
             </div>
