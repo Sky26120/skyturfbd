@@ -7,20 +7,20 @@ import Image from "next/image";
 import SignupImage from "@/public/images/sky-signin.jpg"
 
 class Signin extends React.Component {
-  state = { email: "", password: "", error: "" };
+  state = { phone: "", password: "", error: "" };
 
   handleChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, password } = this.state;
+    const { phone, password } = this.state;
 
     try {
       // ✅ Live-ready fetch with credentials
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ phone, password }),
         credentials: "include", // ✅ live cookie attach করার জন্য
       });
 
@@ -35,7 +35,7 @@ class Signin extends React.Component {
   };
 
   render() {
-    const { email, password, error } = this.state;
+    const { phone, password, error } = this.state;
 
     return (
       <>
@@ -55,15 +55,15 @@ class Signin extends React.Component {
                 <p className="primary-text signin__text">Sky Turf Where Football Meets the Sky</p>
                 <form className="signin__form" onSubmit={this.handleSubmit}>
                   {error && <p style={{ color: "red" }}>{error}</p>}
-                  <label className="signin__form-label" htmlFor="email">Email</label>
+                  <label className="signin__form-label" htmlFor="phone">Phone</label>
                   <input
                     className="signin__form-input"
-                    name="email"
-                    type="email"
-                    placeholder="Email"
-                    value={email}
+                    name="phone"
+                    type="text"
+                    placeholder="Phone"
+                    value={phone}
                     onChange={this.handleChange}
-                    id="email"
+                    id="phone"
                   />
 
                   <label className="signin__form-label" htmlFor="password">Password</label>
