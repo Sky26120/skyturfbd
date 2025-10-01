@@ -234,7 +234,7 @@
   &__map {
     height: 100%;
     aspect-ratio: 16 / 9;
-    margin-bottom: rem(20px);
+    // margin-bottom: rem(20px);
     border-radius: rem(10px);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
     width: 100%;
@@ -242,6 +242,13 @@
       width: 100%;
       height: rem(300px);
       margin-bottom: 0;
+    }
+  }
+
+  &__timeupturf {
+    margin-top: rem(20px);
+    @include mq(large) {
+      margin-top: 0;
     }
   }
 }

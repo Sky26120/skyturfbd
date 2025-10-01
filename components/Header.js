@@ -10,6 +10,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import MobileMenuBarIcon from "@/public/images/menu-bar-mobile.png";
 import MobileMenuBarCross from "@/public/images/close-menu.png";
 
+import Menu from "./api/menuApi";
+import HeaderNav from "./HeaderNav";
+
 gsap.registerPlugin(ScrollTrigger);
 
 const Header = () => {
@@ -18,6 +21,8 @@ const Header = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const headerRef = useRef(null);
+
+  const [menuData, setMenuData] = useState(Menu);
 
   useEffect(() => {
     const header = headerRef.current;
@@ -63,21 +68,8 @@ const Header = () => {
           </div>
 
           <nav className="header__nav-wrap header__nav-wrap--desktop">
-            <Link href="/">
-              <span className="header__nav-item">Home</span>
-            </Link>
-            <Link href="/aboutus">
-              <span className="header__nav-item">About Us</span>
-            </Link>
-            <Link href="/facilities">
-              <span className="header__nav-item">Facilities</span>
-            </Link>
-            <Link href="/gallery">
-              <span className="header__nav-item">Gallery</span>
-            </Link>
-            <Link href="/contactus">
-              <span className="header__nav-item">Contact Us</span>
-            </Link>
+            <HeaderNav menuDataAtt={menuData}/>
+            
             <Link href="/signin">
               <span className="primary-button">Sign In</span>
             </Link>
