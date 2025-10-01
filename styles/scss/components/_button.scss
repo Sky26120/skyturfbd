@@ -35,3 +35,12 @@
         cursor: pointer;
     }
 }
+
+.button-wrap {
+    padding-bottom: rem(50px);
+    display: flex;
+    justify-content: center;
+    @include mq(large) {
+        padding-bottom: rem(100px);
+    }
+}
