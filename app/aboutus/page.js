@@ -7,7 +7,7 @@ const Aboutus = () => {
     <>
       <Turfs/>
       <div className='button-wrap'>
-        <Link href='/booking'>
+        <Link href='https://wa.me/8801887876580' target='_blank'>
           <span className='secondary-button'>Book Now</span>
         </Link>
       </div>
