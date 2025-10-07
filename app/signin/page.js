@@ -1,99 +1,133 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import Router from "next/router";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react"; // 👁️ for password toggle
 
-import SignupImage from "@/public/images/sky-signin.jpg"
+import SignupImage from "@/public/images/sky-signin.jpg";
 
-class Signin extends React.Component {
-  state = { phone: "", password: "", error: "" };
+export default function SigninPage() {
+  const [form, setForm] = useState({ phone: "", password: "" });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
-  handleChange = (e) => this.setState({ [e.target.name]: e.target.value });
-
-  handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const { phone, password } = this.state;
+    setError("");
+    setLoading(true);
 
     try {
-      // ✅ Live-ready fetch with credentials
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone, password }),
-        credentials: "include", // ✅ live cookie attach করার জন্য
+      const res = await signIn("credentials", {
+        phone: form.phone,
+        password: form.password,
+        redirect: false, // prevent auto redirect
       });
 
-      const data = await res.json();
-      if (!res.ok) return this.setState({ error: data.error || "Login failed" });
+      setLoading(false);
 
-      // login successful → redirect to dashboard
-      Router.push("/dashboard");
-    } catch {
-      this.setState({ error: "Something went wrong" });
+      if (res?.error) {
+        setError(res.error || "Invalid credentials");
+      } else if (res?.ok) {
+        router.push("/dashboard");
+      } else {
+        setError("Unexpected error occurred.");
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      setLoading(false);
+      setError("Something went wrong. Please try again.");
     }
   };
 
-  render() {
-    const { phone, password, error } = this.state;
-
-    return (
-      <>
-        <section className="signin">
-          <div className="container">
-            <div className="signin__content">
-              <div className="signin__image-wrap">
-                <Image 
-                  src={SignupImage}
-                  alt=""
-                  width={500}
-                  className="signin__image"
-                />
-              </div>
-              <div className="signin__form-wrap">
-                <h3 className="secondary-heading signin__heading">Welcome to Sky Turf</h3>
-                <p className="primary-text signin__text">Sky Turf Where Football Meets the Sky</p>
-                <form className="signin__form" onSubmit={this.handleSubmit}>
-                  {error && <p style={{ color: "red" }}>{error}</p>}
-                  <label className="signin__form-label" htmlFor="phone">Phone</label>
-                  <input
-                    className="signin__form-input"
-                    name="phone"
-                    type="text"
-                    placeholder="Phone"
-                    value={phone}
-                    onChange={this.handleChange}
-                    id="phone"
-                  />
-
-                  <label className="signin__form-label" htmlFor="password">Password</label>
-                  <input
-                    className="signin__form-input"
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={this.handleChange}
-                    id="password"
-                  />
-                  <Link href="">
-                    <span className="signin__forgot-pass-text">Forgot Password</span>
-                  </Link>
-
-                  <button className="secondary-button signin__button" type="submit">Login</button>
-
-                  <p className="signin__acc-text">
-                    Do not have an account? <Link href="/signup"><span className="signin__link-text">Sign Up</span></Link>
-                  </p>
-                </form>
-              </div>
-            </div>
-            
+  return (
+    <section className="signin">
+      <div className="container">
+        <div className="signin__content">
+          <div className="signin__image-wrap">
+            <Image
+              src={SignupImage}
+              alt="Signin"
+              width={500}
+              className="signin__image"
+            />
           </div>
-        </section>
-      </>
-    );
-  }
-}
 
-export default Signin;
+          <div className="signin__form-wrap">
+            <h3 className="secondary-heading signin__heading">
+              Welcome to Sky Turf
+            </h3>
+            <p className="primary-text signin__text">
+              Sky Turf Where Football Meets the Sky
+            </p>
+
+            <form className="signin__form" onSubmit={handleLogin}>
+              <label className="signin__form-label" htmlFor="phone">
+                Phone
+              </label>
+              <input
+                className="signin__form-input"
+                name="phone"
+                type="text"
+                placeholder="Phone"
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                id="phone"
+                required
+              />
+
+              <label className="signin__form-label" htmlFor="password">
+                Password
+              </label>
+              <div className="signin__form-input-pass-wrap">
+                <input
+                  className="signin__form-input"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  onChange={(e) => setForm({ ...form, password: e.target.value })}
+                  id="password"
+                  required
+                />
+                <button
+                  type="button"
+                  className="signin__form-input-pass-eye"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+                </button>
+              </div>
+
+              {error && (
+                <p style={{ color: "red", marginTop: "10px" }}>{error}</p>
+              )}
+
+              <Link href="">
+                <span className="signin__forgot-pass-text">
+                  Forgot Password
+                </span>
+              </Link>
+
+              <button
+                className="secondary-button signin__button"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? "Logging in..." : "Login"}
+              </button>
+
+              <p className="signin__acc-text">
+                Do not have an account?{" "}
+                <Link href="/signup">
+                  <span className="signin__link-text">Sign Up</span>
+                </Link>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
