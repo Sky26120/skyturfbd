@@ -102,4 +102,22 @@
     &__link-text {
         color: #0059a9;
     }
+
+    &__form-input-pass-wrap {
+        position: relative;
+    }
+
+    &__form-input-pass-eye {
+        position: absolute;
+        top: 0;
+        right: 20px;
+        bottom: 0;
+        margin: auto;
+        background: transparent;
+        border: none;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
 }
