@@ -83,7 +83,7 @@ export default function SigninPage() {
               </label>
               <div className="signin__form-input-pass-wrap">
                 <input
-                  className="signin__form-input"
+                  className="signin__form-input signin__form-input--password"
                   name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"

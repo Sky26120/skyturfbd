@@ -80,6 +80,10 @@
         padding: rem(10px) rem(15px);
         border-radius: rem(5px);
         border: 1px solid #ccc;
+
+        &--password {
+            padding-right: rem(50px);
+        }
     }
 
     &__forgot-pass-text {
