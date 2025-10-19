@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff } from "lucide-react"; // 👁️ for password toggle
+import { Eye, EyeOff } from "lucide-react";
 
 import SignupImage from "@/public/images/sky-signin.jpg";
 
