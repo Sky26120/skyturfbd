@@ -9,7 +9,7 @@ const Facilites = () => {
             <div className="container">
                 <h2 className='primary-heading our-facilities__heading'>Our Facilites</h2>
                 <div className='our-facilities__content'>
-                    <div className='our-facilities__sky'>
+                    <div className='our-facilities__column'>
                         <h3 className='our-facilities__list-heading'>Sky Turf Facilities</h3>
                         <div className='our-facilities__list-wrap'>
                             <ul className='our-facilities__list'>
@@ -24,10 +24,10 @@ const Facilites = () => {
                             </ul>
                         </div>
                         <Link href="">
-                            <span className='secondary-button'>Book Now</span>
+                            <span className='secondary-button our-facilities__button'>Book Now</span>
                         </Link>
                     </div>
-                    <div className='our-facilities__timeup'>
+                    <div className='our-facilities__column'>
                         <h3 className='our-facilities__list-heading'>Time Up Facilities</h3>
                         <div className='our-facilities__list-wrap'>
                             <ul className='our-facilities__list'>
@@ -42,7 +42,7 @@ const Facilites = () => {
                             </ul>
                         </div>
                         <Link href="">
-                            <span className='secondary-button'>Book Now</span>
+                            <span className='secondary-button our-facilities__button'>Book Now</span>
                         </Link>
                     </div>
                 </div>
