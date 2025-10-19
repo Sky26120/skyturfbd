@@ -188,19 +188,42 @@
     list-style: none;
     position: relative;
     @include mq(large) {
-      margin-left: rem(30px);
+      margin-left: rem(40px);
     }
 
     &::before {
       content: '';
       display: block;
-      width: rem(10px);
-      height: rem(10px);
-      border-radius: 2px;
+      width: rem(15px);
+      height: rem(15px);
+      border-radius: 50%;
       background: #0059A9;
       position: absolute;
-      top: rem(4px);
-      left: rem(-20px);
+      top: rem(2px);
+      left: rem(-30px);
+    }
+
+    &--green {
+      &::before {
+        content: '';
+        display: block;
+        width: rem(15px);
+        height: rem(15px);
+        border-radius: 50%;
+        background: green;
+      }
+    }
+
+    &--red {
+      color: #ccc;
+      &::before {
+        content: '';
+        display: block;
+        width: rem(15px);
+        height: rem(15px);
+        border-radius: 50%;
+        background: #c41d25;
+      }
     }
   }
 
