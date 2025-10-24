@@ -4,47 +4,34 @@ import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
 
-const authOptions = {
+export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        phone: { label: "Phone", type: "text", placeholder: "Enter phone number" },
+        phone: { label: "Phone", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         try {
-          console.log("🟢 Credentials received:", credentials);
+          if (!credentials?.phone || !credentials?.password) return null;
 
-          // Check for missing fields
-          if (!credentials?.phone || !credentials?.password) {
-            throw new Error("Phone and password are required");
-          }
-
-          // Connect to DB
           await connectDB();
 
-          // Find user by phone
           const user = await User.findOne({ phone: credentials.phone });
-          if (!user) {
-            throw new Error("User not found");
-          }
+          if (!user) return null;
 
-          // Compare password
           const isMatch = await bcrypt.compare(credentials.password, user.password);
-          if (!isMatch) {
-            throw new Error("Invalid password");
-          }
+          if (!isMatch) return null;
 
-          // Return user data to NextAuth
           return {
             id: user._id.toString(),
             name: user.name,
             phone: user.phone,
           };
         } catch (err) {
-          console.error("❌ Authorize error:", err);
-          throw new Error(err.message || "Login failed");
+          console.error("Authorize error:", err);
+          return null; // prevent 500
         }
       },
     }),
@@ -55,10 +42,7 @@ const authOptions = {
     error: "/signin",
   },
 
-  session: {
-    strategy: "jwt",
-  },
-
+  session: { strategy: "jwt" },
   secret: process.env.NEXTAUTH_SECRET,
 
   callbacks: {
@@ -80,5 +64,4 @@ const authOptions = {
 };
 
 const handler = NextAuth(authOptions);
-
 export { handler as GET, handler as POST };
