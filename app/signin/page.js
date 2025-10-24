@@ -1,4 +1,6 @@
 "use client";
+export const dynamic = "force-dynamic"; // force dynamic rendering to fix build error
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,7 +19,7 @@ export default function SigninPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Handle error query param from NextAuth
+  // handle NextAuth query param error
   useEffect(() => {
     const errorParam = searchParams.get("error");
     if (errorParam) {
