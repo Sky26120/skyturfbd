@@ -1,9 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 
 import SignupImage from "@/public/images/sky-signin.jpg";
@@ -13,7 +13,20 @@ export default function SigninPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Handle error query param from NextAuth
+  useEffect(() => {
+    const errorParam = searchParams.get("error");
+    if (errorParam) {
+      const errorMessages = {
+        CredentialsSignin: "Invalid phone or password",
+      };
+      setError(errorMessages[errorParam] || errorParam);
+    }
+  }, [searchParams]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,13 +37,16 @@ export default function SigninPage() {
       const res = await signIn("credentials", {
         phone: form.phone,
         password: form.password,
-        redirect: false, // prevent auto redirect
+        redirect: false, // prevent automatic redirect
       });
 
       setLoading(false);
 
       if (res?.error) {
-        setError(res.error || "Invalid credentials");
+        const errorMessages = {
+          CredentialsSignin: "Invalid phone or password",
+        };
+        setError(errorMessages[res.error] || res.error || "Invalid credentials");
       } else if (res?.ok) {
         router.push("/dashboard");
       } else {
