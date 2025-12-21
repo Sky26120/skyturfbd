@@ -1,37 +1,58 @@
 import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import Credentials from "next-auth/providers/credentials";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
 
-export const authOptions = {
+export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
-    CredentialsProvider({
+    Credentials({
       name: "Credentials",
       credentials: {
         phone: { label: "Phone", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      authorize: async (credentials) => {
         try {
-          if (!credentials?.phone || !credentials?.password) return null;
+          console.log(" Login attempt for:", credentials?.phone);
 
+          if (!credentials?.phone || !credentials?.password) {
+            console.log(" Missing credentials");
+            return null;
+          }
+
+          
           await connectDB();
+          console.log(" Database connected");
 
+         
           const user = await User.findOne({ phone: credentials.phone });
-          if (!user) return null;
+          if (!user) {
+            console.log(" User not found");
+            return null;
+          }
 
-          const isMatch = await bcrypt.compare(credentials.password, user.password);
-          if (!isMatch) return null;
+          console.log(" User found:", user.name);
 
+       
+          const isValid = await bcrypt.compare(credentials.password, user.password);
+          if (!isValid) {
+            console.log(" Invalid password");
+            return null;
+          }
+
+          console.log(" Login successful!");
+
+         
           return {
             id: user._id.toString(),
             name: user.name,
             phone: user.phone,
+            email: user.email,
           };
-        } catch (err) {
-          console.error("Authorize error:", err);
-          return null; // prevent 500
+        } catch (error) {
+          console.error(" Auth error:", error);
+          return null;
         }
       },
     }),
@@ -39,29 +60,28 @@ export const authOptions = {
 
   pages: {
     signIn: "/signin",
-    error: "/signin",
   },
 
-  session: { strategy: "jwt" },
-  secret: process.env.NEXTAUTH_SECRET,
-
   callbacks: {
-    async jwt({ token, user }) {
+    jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.name = user.name;
         token.phone = user.phone;
+        token.email = user.email;
       }
       return token;
     },
-    async session({ session, token }) {
+    session({ session, token }) {
       if (token) {
         session.user.id = token.id;
+        session.user.name = token.name;
         session.user.phone = token.phone;
+        session.user.email = token.email;
       }
       return session;
     },
   },
-};
+});
 
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+export const { GET, POST } = handlers;
