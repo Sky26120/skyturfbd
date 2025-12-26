@@ -7,9 +7,9 @@ export default function DashboardPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    if (status === "unauthenticated") router.push("/signin");
-  }, [status, router]);
+  // useEffect(() => {
+  //   if (status === "unauthenticated") router.push("/signin");
+  // }, [status, router]);
 
   if (status === "loading") return <p>Loading...</p>;
 

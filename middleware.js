@@ -1,25 +1,25 @@
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
 
 export function middleware(req) {
-  const token = req.cookies.get("auth_token")?.value;
+  const { pathname } = req.nextUrl;
+  
+ 
+  const sessionToken = 
+    req.cookies.get("next-auth.session-token")?.value || 
+    req.cookies.get("__Secure-next-auth.session-token")?.value;
 
-  // Dashboard JWT check
-  if (req.nextUrl.pathname.startsWith("/dashboard")) {
-    if (!token) {
+  
+  if (pathname.startsWith("/dashboard")) {
+    if (!sessionToken) {
+      console.log(" No session token, redirecting to signin");
       return NextResponse.redirect(new URL("/signin", req.url));
     }
-
-    try {
-      jwt.verify(token, process.env.JWT_SECRET);
-    } catch (err) {
-      return NextResponse.redirect(new URL("/signin", req.url));
-    }
+    console.log(" Session token found, allowing access");
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"], // jei route protected
+  matcher: ["/dashboard/:path*"],
 };

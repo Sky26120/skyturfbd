@@ -1,7 +1,8 @@
 import '../styles/scss/main.scss';
 import Header from '@/components/Header'
 import Footer from '@/components/Footer';
-import { SessionProvider } from "next-auth/react";
+
+import { Providers } from './Providers/providers';
 
 export const metadata = {
   title: "Sky Turf",
@@ -13,7 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Header />
-          <SessionProvider>{children}</SessionProvider>
+            <Providers>{children}</Providers>
         <Footer />
       </body>
     </html>
