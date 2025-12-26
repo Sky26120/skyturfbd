@@ -1,0 +1,122 @@
+.dashboard {
+    padding: rem(50px) 0;
+    // @include mq(large) {
+    //     padding: rem(100px);
+    // }
+
+    &__content {
+        max-width: rem(700px);
+        width: 100%;
+        margin: auto;
+    }
+
+    &__greetings {
+        @include mq(large) {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    &__greeting-text {
+        text-align: center;
+        font-size: rem(18px);
+        @include mq(large) {
+            font-size: rem(26px);
+            text-align: left;
+        }
+    }
+
+    &__button-wrap {
+        margin-top: rem(10px);
+        display: flex;
+        justify-content: center;
+        @include mq(large) {
+            margin-top: 0;
+            display: block;
+        }
+    }
+
+    &__profile {
+        margin-top: rem(50px);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+        padding: rem(40px) rem(20px);
+        border-radius: rem(10px);
+        @include mq(large) {
+            padding: rem(40px);
+        }
+    }
+
+    &__profile-title {
+        font-size: rem(18px);
+        font-weight: bold;
+        @include mq(large) {
+            font-size: rem(20px);
+        }
+    }
+
+    &__profile-info-wrap {
+        margin-top: rem(20px);
+    }
+
+    &__profile-label {
+        font-size: rem(16px);
+        margin-bottom: rem(10px);
+        @include mq(large) {
+            font-size: rem(18px);
+        }
+    }
+
+    &__profile-input {
+        font-size: rem(18px);
+        @include mq(large) {
+            font-size: rem(20px);
+        }
+    }
+
+    &__booking {
+        margin-top: rem(25px);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+        padding: rem(40px) rem(20px);
+        border-radius: rem(10px);
+        @include mq(large) {
+            margin-top: rem(50px);
+            padding: rem(40px);
+        }
+    }
+
+    &__booking-title {
+        font-size: rem(18px);
+        font-weight: bold;
+        @include mq(large) {
+            font-size: rem(20px);
+        }
+    }
+
+    &__booking-info-wrap {
+        margin-top: rem(20px);
+    }
+
+    &__booking-list {
+        margin-top: rem(20px);
+    }
+
+    &__booking-list-item {
+        margin-top: rem(20px);
+    }
+
+    &__booking-label {
+        font-size: rem(16px);
+        margin-bottom: rem(10px);
+        @include mq(large) {
+            font-size: rem(18px);
+        }
+    }
+
+    &__booking-input {
+        font-size: rem(18px);
+        @include mq(large) {
+            font-size: rem(20px);
+        }
+    }
+}
