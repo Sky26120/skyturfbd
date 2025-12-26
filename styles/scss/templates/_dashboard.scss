@@ -5,7 +5,7 @@
     // }
 
     &__content {
-        max-width: rem(700px);
+        max-width: rem(1100px);
         width: 100%;
         margin: auto;
     }
@@ -127,6 +127,68 @@
         font-size: rem(18px);
         @include mq(large) {
             font-size: rem(20px);
+        }
+    }
+
+    &__tab-content {
+        margin-top: rem(25px);
+    }
+
+    &__filter-date {
+        margin-top: rem(25px);
+        margin-bottom: rem(20px);
+        display: flex;
+        justify-content: flex-end;
+        @include mq(large){
+            margin-bottom: rem(10px);
+        }
+
+        input {
+            padding: rem(5px) rem(20px);
+            border-radius: rem(5px);
+            border: 1px solid #aaa;
+        }
+    }
+
+    &__table-wrap {
+        overflow-x: scroll;
+
+        th {
+            padding: rem(5px);
+        }
+
+        td {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        input {
+            padding: rem(5px);
+        }
+
+        select {
+            padding: rem(5px);
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        option {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        button {
+            padding: rem(2px) rem(20px);
+            background: #007200;
+            border: none;
+            border-radius: rem(2px);
+
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
 }
