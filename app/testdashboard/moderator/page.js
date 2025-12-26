@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import DashboardGreeting from '@/components/DashboardGreeting'
 import DashboardProfileInfo from '@/components/DashboardProfileInfo'

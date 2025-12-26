@@ -4,8 +4,6 @@ import DashboardGreeting from '@/components/DashboardGreeting'
 import DashboardProfileInfo from '@/components/DashboardProfileInfo'
 import DashboardTable from '@/components/DashboardTable'
 
-
-
 const SuperAdmin = () => {
   return (
     <>
