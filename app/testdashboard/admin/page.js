@@ -1,6 +1,7 @@
 import React from 'react'
 import DashboardGreeting from '@/components/DashboardGreeting'
 import DashboardProfileInfo from '@/components/DashboardProfileInfo'
+import DashboardTable from '@/components/DashboardTable'
 
 const Admin = () => {
   return (
@@ -10,6 +11,7 @@ const Admin = () => {
                 <div className="dashboard__content">
                     <DashboardGreeting />
                     <DashboardProfileInfo />
+                    <DashboardTable />
                 </div>
             </div>
         </div>
