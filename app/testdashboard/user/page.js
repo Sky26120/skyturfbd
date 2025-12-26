@@ -1,4 +1,6 @@
 import React from 'react'
+import DashboardGreeting from '@/components/DashboardGreeting'
+import DashboardProfileInfo from '@/components/DashboardProfileInfo'
 
 const Customer = () => {
   return (
@@ -6,27 +8,8 @@ const Customer = () => {
         <section className='dashboard'>
           <div className="container">
             <div className="dashboard__content">
-              <div className='dashboard__greetings'>
-                <p className='dashboard__greeting-text'>WELCOME, <strong>MINHAZUL ABEDIN</strong></p>
-                <div className='dashboard__button-wrap'>
-                  <button className='secondary-button'>Sign Out</button>
-                </div>
-              </div>
-              <div className="dashboard__profile">
-                <p className='dashboard__profile-title'>Profile</p>
-                <div className='dashboard__profile-info-wrap'>
-                  <p className='dashboard__profile-label'>Name:</p>
-                  <p className='dashboard__profile-input'>MINHAZUL ABEDIN</p>
-                </div>
-                <div className='dashboard__profile-info-wrap'>
-                  <p className='dashboard__profile-label'>Phone:</p>
-                  <p className='dashboard__profile-input'>+8801328501655</p>
-                </div>
-                <div className='dashboard__profile-info-wrap'>
-                  <p className='dashboard__profile-label'>Email:</p>
-                  <p className='dashboard__profile-input'>minhazulabedin1071@gmail.com</p>
-                </div>
-              </div>
+              <DashboardGreeting />
+              <DashboardProfileInfo />
               <div className="dashboard__booking">
                 <p className='dashboard__booking-title'>Booking</p>
                 <div className='dashboard__booking-info-wrap'>

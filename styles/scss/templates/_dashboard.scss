@@ -47,12 +47,22 @@
         }
     }
 
+    &__profile-wrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
     &__profile-title {
         font-size: rem(18px);
         font-weight: bold;
         @include mq(large) {
             font-size: rem(20px);
         }
+    }
+
+    &__profile-role {
+        font-size: rem(16px);
     }
 
     &__profile-info-wrap {
