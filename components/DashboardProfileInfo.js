@@ -4,7 +4,7 @@ const DashboardProfileInfo = () => {
   return (
     <div className="dashboard__profile">
         <div className='dashboard__profile-wrap'>
-            <p className='dashboard__profile-title'>Profile</p>
+            <h2 className='dashboard__profile-title'>Profile</h2>
             <p className='dashboard__profile-role'>Role: <strong>User</strong></p>
         </div>
         <div className='dashboard__profile-info-wrap'>
