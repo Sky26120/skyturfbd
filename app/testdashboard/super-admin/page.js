@@ -2,7 +2,7 @@
 import React from 'react'
 import DashboardGreeting from '@/components/DashboardGreeting'
 import DashboardProfileInfo from '@/components/DashboardProfileInfo'
-import DashboardTable from '@/components/DashboardTable'
+import DashboardSuperTable from '@/components/DashboardSuperTable'
 
 const SuperAdmin = () => {
   return (
@@ -12,7 +12,7 @@ const SuperAdmin = () => {
                 <div className="dashboard__content">
                   <DashboardGreeting />
                   <DashboardProfileInfo />
-                  <DashboardTable />
+                  <DashboardSuperTable />
                 </div>
             </div>
         </div>        

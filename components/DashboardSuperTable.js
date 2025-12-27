@@ -4,12 +4,16 @@ import React, { useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import Slot from './api/slotsApi';
+import Users from './api/userApi';
 
 import DashboardTableRow from './DashboardTableRow';
+import DashboardUsersTableRow from './DashboardUsersTableRow';
 
-const DashboardTable = () => {
+const DashboardSuperTable = () => {
   
   const [slotData, setSlotData] = useState(Slot);
+
+  const [userData, setUserData] = useState(Users);
 
   return (
     <div className='dashboard__tab-content'>
@@ -19,6 +23,7 @@ const DashboardTable = () => {
         <Tabs>
             <TabList>
                 <Tab>Slots Details</Tab>
+                <Tab>All Users</Tab>
             </TabList>
 
             <TabPanel>
@@ -42,9 +47,26 @@ const DashboardTable = () => {
                     </table>
                 </div>
             </TabPanel>
+            <TabPanel>
+                <div className='dashboard__user-table-wrap'>
+                    <table>
+                        <tr>
+                            <th>SL</th>
+                            <th>Full Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Permission</th>
+                            <th>Delete</th>
+                        </tr>
+
+                        <DashboardUsersTableRow userDataAtt={userData} />
+                    </table>
+                </div>
+            </TabPanel>
         </Tabs>
     </div>
   )
 }
 
-export default DashboardTable
+export default DashboardSuperTable

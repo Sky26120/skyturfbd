@@ -132,6 +132,10 @@
 
     &__tab-content {
         margin-top: rem(25px);
+
+        .react-tabs__tab-list {
+            list-style: none !important; 
+        }
     }
 
     &__filter-date {
@@ -193,6 +197,11 @@
     }
 
     &__user-table-wrap {
+        overflow-x: scroll;
+        @include mq(1115px) {
+            overflow-x: hidden;
+        }
+
         td {
             text-overflow: ellipsis;
             white-space: nowrap;

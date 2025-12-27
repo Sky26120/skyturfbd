@@ -10,9 +10,9 @@ const InspectAdmin = () => {
         <div className="dashboard">
             <div className="container">
                 <div className="dashboard__content">
-                    <DashboardGreeting />
-                    <DashboardProfileInfo />
-                    <DashboardTable />
+                  <DashboardGreeting />
+                  <DashboardProfileInfo />
+                  <DashboardTable />
                 </div>
             </div>
         </div>
