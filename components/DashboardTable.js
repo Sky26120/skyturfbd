@@ -4,12 +4,16 @@ import React, { useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import Slot from './api/slotsApi';
+import Users from './api/userApi';
 
 import DashboardTableRow from './DashboardTableRow';
+import DashboardUsersTableRow from './DashboardUsersTableRow';
 
 const DashboardTable = () => {
   
   const [slotData, setSlotData] = useState(Slot);
+
+  const [userData, setUserData] = useState(Users);
 
   return (
     <div className='dashboard__tab-content'>
@@ -23,10 +27,10 @@ const DashboardTable = () => {
             </TabList>
 
             <TabPanel>
-                <div className='dashboard__table-wrap'>
+                <div className='dashboard__slot-table-wrap'>
                     <table>
                         <tr>
-                            <th>Slot</th>
+                            <th>Slot Time</th>
                             <th>Name</th>
                             <th>Contact</th>
                             <th>Location</th>
@@ -44,7 +48,21 @@ const DashboardTable = () => {
                 </div>
             </TabPanel>
             <TabPanel>
-                <h2>This Data will be come from Database</h2>
+                <div className='dashboard__user-table-wrap'>
+                    <table>
+                        <tr>
+                            <th>SL</th>
+                            <th>Full Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Permission</th>
+                            <th>Delete</th>
+                        </tr>
+
+                        <DashboardUsersTableRow userDataAtt={userData} />
+                    </table>
+                </div>
             </TabPanel>
         </Tabs>
     </div>
