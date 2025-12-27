@@ -1,6 +1,8 @@
+"use client"
 import React from 'react'
 import DashboardGreeting from '@/components/DashboardGreeting'
 import DashboardProfileInfo from '@/components/DashboardProfileInfo'
+import DashboardTable from '@/components/DashboardTable'
 
 const InspectAdmin = () => {
   return (
@@ -8,8 +10,9 @@ const InspectAdmin = () => {
         <div className="dashboard">
             <div className="container">
                 <div className="dashboard__content">
-                    <DashboardGreeting />
-                    <DashboardProfileInfo />
+                  <DashboardGreeting />
+                  <DashboardProfileInfo />
+                  <DashboardTable />
                 </div>
             </div>
         </div>

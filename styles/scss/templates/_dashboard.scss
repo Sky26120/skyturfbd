@@ -132,6 +132,10 @@
 
     &__tab-content {
         margin-top: rem(25px);
+
+        .react-tabs__tab-list {
+            list-style: none !important; 
+        }
     }
 
     &__filter-date {
@@ -150,7 +154,7 @@
         }
     }
 
-    &__table-wrap {
+    &__slot-table-wrap {
         overflow-x: scroll;
 
         th {
@@ -183,6 +187,44 @@
         button {
             padding: rem(2px) rem(20px);
             background: #007200;
+            border: none;
+            border-radius: rem(2px);
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    &__user-table-wrap {
+        overflow-x: scroll;
+        @include mq(1115px) {
+            overflow-x: hidden;
+        }
+
+        td {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 0 rem(20px);
+        }
+
+        select {
+            padding: rem(5px);
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        option {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        button {
+            padding: rem(2px) rem(20px);
+            background: #C41D25;
             border: none;
             border-radius: rem(2px);
 
