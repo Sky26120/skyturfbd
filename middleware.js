@@ -1,20 +1,40 @@
 import { NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
 
-export function middleware(req) {
+export async function middleware(req) {
   const { pathname } = req.nextUrl;
-  
- 
-  const sessionToken = 
-    req.cookies.get("next-auth.session-token")?.value || 
-    req.cookies.get("__Secure-next-auth.session-token")?.value;
+
+  const token = await getToken({
+    req,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
 
   
-  if (pathname.startsWith("/dashboard")) {
-    if (!sessionToken) {
-      console.log(" No session token, redirecting to signin");
-      return NextResponse.redirect(new URL("/signin", req.url));
-    }
-    console.log(" Session token found, allowing access");
+  if (!token && pathname.startsWith("/dashboard")) {
+    return NextResponse.redirect(new URL("/signin", req.url));
+  }
+
+
+  if (token?.role === "SUPER_ADMIN") {
+    return NextResponse.next();
+  }
+
+
+  const roleRouteMap = {
+    CUSTOMER: ["/dashboard/user"],
+    GENERAL_ADMIN: ["/dashboard/admin"],
+    MODERATOR: ["/dashboard/moderator"],
+    INSPECT_ADMIN: ["/dashboard/inspect-admin"],
+  };
+
+  const allowedRoutes = roleRouteMap[token?.role] || [];
+
+  const isAllowed = allowedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+
+  if (!isAllowed && pathname.startsWith("/dashboard")) {
+    return NextResponse.redirect(new URL("/unauthorized", req.url));
   }
 
   return NextResponse.next();

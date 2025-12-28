@@ -49,6 +49,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             name: user.name,
             phone: user.phone,
             email: user.email,
+            role:user.role
           };
         } catch (error) {
           console.error(" Auth error:", error);
@@ -69,6 +70,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.name = user.name;
         token.phone = user.phone;
         token.email = user.email;
+        token.role = user.role;
       }
       return token;
     },
@@ -78,6 +80,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.name = token.name;
         session.user.phone = token.phone;
         session.user.email = token.email;
+        session.user.role = token.role;
       }
       return session;
     },
