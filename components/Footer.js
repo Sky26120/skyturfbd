@@ -104,7 +104,11 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className='footer__copyright'>
-                    <p className='footer__copyright-text'>© All Rights Reserve by Sky Turf, 2025</p>
+                    <p className='footer__copyright-text'>© All Rights Reserve by Sky Turf, 2025 made by &nbsp;
+                        <Link href="https://www.linkedin.com/in/minhazul-abedin-siam-08286012a/" target='_blank'>
+                            <span className='footer__copyright-text footer__copyright-text--underline'>Minhazul Abedin</span>
+                        </Link>
+                    </p>
                 </div>
             </div>
         </footer>

@@ -23,7 +23,7 @@ const Facilites = () => {
                                 <li className='our-facilities__list-item our-facilities__list-item--green'>Cricket football accessories</li>
                             </ul>
                         </div>
-                        <Link href="">
+                        <Link href="/booking">
                             <span className='secondary-button our-facilities__button'>Book Now</span>
                         </Link>
                     </div>
@@ -41,7 +41,7 @@ const Facilites = () => {
                                 <li className='our-facilities__list-item our-facilities__list-item--green'>Cricket football accessories</li>
                             </ul>
                         </div>
-                        <Link href="">
+                        <Link href="/booking">
                             <span className='secondary-button our-facilities__button'>Book Now</span>
                         </Link>
                     </div>

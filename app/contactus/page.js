@@ -9,7 +9,7 @@ const Contactus = () => {
       <section className='contact'>
         <Map/>
         <div className='button-wrap'>
-          <Link href='https://wa.me/8801887876580' target='_blank'>
+          <Link href='/booking'>
             <span className='secondary-button'>Book Now</span>
           </Link>
         </div>
