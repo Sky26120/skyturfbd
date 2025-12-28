@@ -32,7 +32,7 @@ export default function SigninPage() {
       if (res?.error) {
         setError(res.error || "Invalid credentials");
       } else if (res?.ok) {
-        window.location.href = "/dashboard";
+        window.location.href = "/testdashboard/user";
       } else {
         setError("Unexpected error occurred.");
       }
