@@ -224,20 +224,6 @@ const Booking = () => {
                 {errors.timeSlot && <span className='error-message'>{errors.timeSlot}</span>}
               </div>
 
-              {/* Notes */}
-              <div className='booking__form-input-wrap'>
-                <label className='booking__form-label' htmlFor="notes">Notes:</label>
-                <textarea 
-                  className='booking__form-input' 
-                  rows="3" 
-                  name="notes" 
-                  id="notes"
-                  placeholder='Specify number of players or any specific requirements'
-                  value={formData.notes}
-                  onChange={handleChange}
-                />
-              </div>
-
               {/* Transaction ID */}
               <div className='booking__form-input-wrap'>
                 <label className='booking__form-label' htmlFor="transactionId">Transaction ID:</label>
@@ -257,6 +243,20 @@ const Booking = () => {
                     {formData.transactionId.length}/10 characters entered
                   </span>
                 )}
+              </div>
+
+              {/* Notes */}
+              <div className='booking__form-input-wrap'>
+                <label className='booking__form-label' htmlFor="notes">Notes:</label>
+                <textarea 
+                  className='booking__form-input' 
+                  rows="3" 
+                  name="notes" 
+                  id="notes"
+                  placeholder='Specify number of players or any specific requirements'
+                  value={formData.notes}
+                  onChange={handleChange}
+                />
               </div>
 
               {/* Payment Options */}
@@ -311,6 +311,8 @@ const Booking = () => {
 
                   {errors.paymentType && <span className='error-message'>{errors.paymentType}</span>}
 
+                  <p className='booking__payment-agree-text'>By making this booking you agree to our terms and conditions.</p>
+
                   <div className='booking__payment-button-wrap'>
                     <button 
                       type="submit"
@@ -321,6 +323,8 @@ const Booking = () => {
                       {loading ? 'PROCESSING...' : 'CONFIRM BOOKING'}
                     </button>
                   </div>
+
+                  <p className='booking__payment-agree-text'>I agree that confirming the booking places me under an obligation to make a payment in accordance with the General Terms and Conditions.</p>
 
                   {submitError && <div className='error-message' style={{ marginBottom: '1rem' }}>{submitError}</div>}
                 </div>

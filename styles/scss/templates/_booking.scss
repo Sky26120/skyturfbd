@@ -43,6 +43,7 @@
     &__form-heading {
         font-size: rem(18px);
         font-weight: bold;
+        margin-bottom: rem(20px);
         @include mq(large) {
             font-size: rem(20px);
         }
@@ -80,10 +81,10 @@
     &__payment-wrap {
         margin-top: rem(25px);
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-        padding: rem(40px) rem(20px);
+        padding: rem(20px);
         border-radius: rem(10px);
         @include mq(large) {
-            padding: rem(40px);
+            padding: rem(20px) ;
         }
     }
 
