@@ -89,10 +89,15 @@
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
         padding: rem(40px) rem(20px);
         border-radius: rem(10px);
+        overflow: hidden;
         @include mq(large) {
             margin-top: rem(50px);
             padding: rem(40px);
         }
+    }
+
+    &__booking-scroll {
+        overflow-x: scroll;
     }
 
     &__booking-title {
@@ -109,6 +114,22 @@
 
     &__booking-list {
         margin-top: rem(20px);
+
+        tr {
+            border: 1px solid #aaa;
+        }
+
+        th, td {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: rem(5px) rem(20px);
+            border-bottom: 1px solid #aaa;
+            border-right: 1px solid #aaa;
+
+            &:last-child {
+                border-right: none;
+            }
+        }
     }
 
     &__booking-list-item {
@@ -117,7 +138,7 @@
 
     &__booking-label {
         font-size: rem(16px);
-        margin-bottom: rem(10px);
+        margin-top: rem(20px);
         @include mq(large) {
             font-size: rem(18px);
         }
@@ -128,6 +149,13 @@
         @include mq(large) {
             font-size: rem(20px);
         }
+    }
+
+    &__booking-button-wrap {
+        margin-top: rem(20px);
+        display: flex;
+        align-items: center;
+        gap: rem(20px);
     }
 
     &__tab-content {
@@ -232,5 +260,9 @@
                 cursor: pointer;
             }
         }
+    }
+
+    &__loading {
+        margin-top: rem(25px);
     }
 }
