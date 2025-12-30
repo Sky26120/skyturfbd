@@ -289,8 +289,39 @@ const handleSubmit = async (e) => {
               </div>
             </div>
           </div>
-
-       
+          
+          <div className="booking__summary-wrap">
+            <div className='booking__summary-sticky'>
+              <h3 className='booking__summary-heading'>Booking Summary</h3>
+              <div className='booking__summary-info-wrap'>
+                <h4 className='booking__summary-user-name'>MINHAZUL ABEDIN</h4>
+                <p className='booking__summary-user-contact'>01328501655</p>
+              </div>
+              <div className='booking__summary-slot-info'>
+                <p className='booking__summary-arena'>Sky Turf</p>
+                <p className='booking__summary-slot'>Sat Dec 27, 10:00 PM</p>
+                <p className='booking__summary-duration'>Duration: 90 mins</p>
+              </div>
+              <div className='booking__summary-amount-wrap'>
+                <p className='booking__summary-amount-text'>Payable</p>
+                <p className='booking__summary-amount'>BDT 2,500</p>
+              </div>
+              <div className='booking__summary-help-wrap'>
+                <p className='booking__summary-help-title'>Need help?</p>
+                <p className='booking__summary-help-text'>Contact our team of experts for further assistance.</p>
+                <p className='booking__summary-phone-text'>Phone: 
+                  <Link href='tel: 01887876580'>
+                    <span className='booking__summary-phone'> +8801887876580</span>
+                  </Link>
+                </p>
+                <p className='booking__summary-phone-text'>Email: 
+                  <Link href='mailto: skyturf0@gmail.com'>
+                    <span className='booking__summary-email'> skyturf0@gmail.com</span>
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
