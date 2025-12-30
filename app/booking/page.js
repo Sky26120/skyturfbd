@@ -226,6 +226,10 @@ const Booking = () => {
 
               {/* Transaction ID */}
               <div className='booking__form-input-wrap'>
+                <p className='booking__form-label'>Our Bkash Merchent Number: 01887876580</p>
+                <p className='booking__form-label'>Make your advance payment first and share your transaction ID</p>
+              </div>
+              <div className='booking__form-input-wrap'>
                 <label className='booking__form-label' htmlFor="transactionId">Transaction ID:</label>
                 <input
                   type="text"
@@ -235,7 +239,7 @@ const Booking = () => {
                   value={formData.transactionId}
                   onChange={handleChange}
                   className='booking__form-input'
-                  placeholder="Enter 10-character transaction ID"
+                  placeholder="Enter 10-character transaction ID 'CLXXXXXXXX'"
                 />
                 {errors.transactionId && <span className='error-message'>{errors.transactionId}</span>}
                 {formData.transactionId && formData.transactionId.length !== 10 && (
