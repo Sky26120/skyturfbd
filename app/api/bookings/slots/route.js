@@ -16,7 +16,7 @@ const TIME_SLOTS = [
   "08:00pm to 09:30pm",
   "09:30pm to 11:00pm",
   "11:00pm to 12:30am",
-  "12:30am to 02:00am"
+  "12:30am to 02:00am",
 ];
 
 export async function GET(request) {
@@ -34,21 +34,21 @@ export async function GET(request) {
     const bookingDate = new Date(dateParam);
     bookingDate.setHours(0, 0, 0, 0);
 
-   
     const bookings = await Booking.find({
       arenaName,
       bookingDate,
-      status: { $in: ["pending", "confirmed"] }
+      status: { $in: ["pending", "confirmed"] },
     }).select("timeSlot");
 
     const bookedSlots = bookings.map(b => b.timeSlot);
 
- 
     const today = new Date();
-    today.setSeconds(0, 0);
+    today.setSeconds(0, 0, 0, 0);
 
+   
     let availableSlots = TIME_SLOTS.filter(slot => !bookedSlots.includes(slot));
 
+   
     if (bookingDate.toDateString() === today.toDateString()) {
       const currentHour = today.getHours();
       const currentMinute = today.getMinutes();
@@ -56,19 +56,17 @@ export async function GET(request) {
       availableSlots = availableSlots.filter(slot => {
         const [start] = slot.split(" to ");
         let [hour, minPart] = start.split(":");
+        let minutes = parseInt(minPart);
         hour = parseInt(hour);
-        const isPM = start.includes("pm") && hour !== 12;
-        const isAM = start.includes("am") && hour === 12 ? 0 : hour;
-        const minutes = parseInt(minPart);
 
-        let slotHour24 = isPM ? hour + 12 : hour;
+        if (start.includes("pm") && hour !== 12) hour += 12;
+        if (start.includes("am") && hour === 12) hour = 0;
 
-        return slotHour24 > currentHour || (slotHour24 === currentHour && minutes > currentMinute);
+        return hour > currentHour || (hour === currentHour && minutes > currentMinute);
       });
     }
 
     return NextResponse.json({ availableSlots });
-
   } catch (error) {
     console.error("Error fetching available slots:", error);
     return NextResponse.json({ error: "Something went wrong" }, { status: 500 });

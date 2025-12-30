@@ -1,14 +1,25 @@
-import React from 'react'
+"use client";
+import { signOut, useSession } from "next-auth/react";
 
 const DashboardGreeting = () => {
-  return (
-    <div className='dashboard__greetings'>
-        <p className='dashboard__greeting-text'>WELCOME, <strong>MINHAZUL ABEDIN</strong></p>
-        <div className='dashboard__button-wrap'>
-            <button className='secondary-button'>Sign Out</button>
-        </div>
-    </div>
-  )
-}
+  const { data: session } = useSession();
 
-export default DashboardGreeting
+  return (
+    <div className="dashboard__greetings">
+      <p className="dashboard__greeting-text">
+        WELCOME, <strong>{session?.user?.name}</strong>
+      </p>
+
+      <div className="dashboard__button-wrap">
+        <button
+          className="secondary-button"
+          onClick={() => signOut()}
+        >
+          Sign Out
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default DashboardGreeting;

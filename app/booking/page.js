@@ -33,7 +33,8 @@ const Booking = () => {
     bookingDate: '',
     timeSlot: '',
     notes: '',
-    paymentType: ''
+    paymentType: '',
+    transactionId: ''
   })
 
   const [errors, setErrors] = useState({})
@@ -59,7 +60,6 @@ const Booking = () => {
     setFormData(prev => ({ ...prev, paymentType: e.target.value }))
     if (errors.paymentType) setErrors(prev => ({ ...prev, paymentType: '' }))
   }
-
 
   useEffect(() => {
     if (!formData.arenaName || !formData.bookingDate) return
@@ -89,207 +89,246 @@ const Booking = () => {
       selectedDate.setHours(0, 0, 0, 0)
       if (selectedDate < today) newErrors.bookingDate = 'Cannot book for past dates'
     }
-
     if (!formData.timeSlot) newErrors.timeSlot = 'Please select a time slot'
     if (!formData.paymentType) newErrors.paymentType = 'Please select a payment option'
+    if (!formData.transactionId) newErrors.transactionId = 'Please enter transaction ID'
+    else if (formData.transactionId.length !== 10)
+      newErrors.transactionId = 'Transaction ID must be exactly 10 characters'
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
-const handleSubmit = async (e) => {
-  e.preventDefault()
-  setSubmitError('')
 
-  if (!validateForm()) return
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setSubmitError('')
 
-  setLoading(true)
+    if (!validateForm()) return
 
-  try {
-    const bookingData = {
-      arenaName: formData.arenaName,
-      bookingDate: formData.bookingDate,
-      timeSlot: formData.timeSlot,
-      notes: formData.notes,
-      paymentType: formData.paymentType,
-      totalAmount: formData.paymentType === 'advance' ? 500 : currentPrice
+    setLoading(true)
+
+    try {
+      const bookingData = {
+        arenaName: formData.arenaName,
+        bookingDate: formData.bookingDate,
+        timeSlot: formData.timeSlot,
+        notes: formData.notes,
+        paymentType: formData.paymentType,
+        totalAmount: formData.paymentType === 'advance' ? 500 : currentPrice,
+        transactionId: formData.transactionId // string, exactly 10 chars
+      }
+
+      const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookingData),
+      })
+
+      const data = await response.json()
+      if (!response.ok) throw new Error(data.error || 'Failed to create booking')
+
+      setAvailableSlots(prev => prev.filter(slot => slot !== formData.timeSlot))
+      alert('Booking confirmed successfully!')
+      router.push(`/testdashboard`)
+    } catch (error) {
+      console.error('Booking error:', error)
+      setSubmitError(error.message || 'Failed to create booking. Please try again.')
+    } finally {
+      setLoading(false)
     }
-
-    const response = await fetch('/api/bookings', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(bookingData),
-    })
-
-    const data = await response.json()
-
-    if (!response.ok) throw new Error(data.error || 'Failed to create booking')
-
-    
-    setAvailableSlots(prev =>
-      prev.filter(slot => slot !== formData.timeSlot)
-    )
-
-    alert('Booking confirmed successfully!')
-    router.push(`/testdashboard/user`)
-  } catch (error) {
-    console.error('Booking error:', error)
-    setSubmitError(error.message || 'Failed to create booking. Please try again.')
-  } finally {
-    setLoading(false)
   }
-}
-
 
   const getMinDate = () => {
     const today = new Date()
     return today.toISOString().split('T')[0]
   }
 
+  const isSubmitDisabled =
+    loading ||
+    !formData.arenaName ||
+    !formData.bookingDate ||
+    !formData.timeSlot ||
+    !formData.paymentType ||
+    formData.transactionId.length !== 10
+
+  const getButtonTooltip = () => {
+    if (loading) return 'Processing...'
+    if (!formData.arenaName) return 'Please select an arena'
+    if (!formData.bookingDate) return 'Please select a date'
+    if (!formData.timeSlot) return 'Please select a time slot'
+    if (!formData.paymentType) return 'Please select a payment option'
+    if (formData.transactionId.length !== 10) return 'Transaction ID must be exactly 10 characters'
+    return 'Confirm your booking'
+  }
+
   return (
     <section className='booking'>
       <div className="container">
         <div className="booking__content">
+          {/* Form Section */}
           <div className="booking__info-wrap">
             <DashboardProfileInfo />
 
-            <div className='booking__form-wrap'>
+            <form className='booking__form-wrap' onSubmit={handleSubmit}>
               <h2 className='booking__form-heading'>Booking</h2>
-              <form className='booking__form' onSubmit={handleSubmit}>
-                <div className='booking__form-input-wrap'>
-                  <label className='booking__form-label' htmlFor="arenaName">Arena:</label>
-                  <select 
-                    className='booking__select' 
-                    name="arenaName" 
-                    id="arenaName"
-                    value={formData.arenaName}
-                    onChange={handleChange}
-                  >
-                    <option value="">Select Arena</option>
-                    <option value="Sky Turf">Sky Turf</option>
-                    <option value="Time Up">Time Up</option>
-                  </select>
-                  {errors.arenaName && <span className='error-message'>{errors.arenaName}</span>}
-                </div>
 
-                <div className='booking__form-input-wrap'>
-                  <label className='booking__form-label' htmlFor="bookingDate">Date:</label>
-                  <input 
-                    className='booking__form-input' 
-                    type="date"
-                    name="bookingDate"
-                    id="bookingDate"
-                    min={getMinDate()}
-                    value={formData.bookingDate}
-                    onChange={handleChange}
-                  />
-                  {errors.bookingDate && <span className='error-message'>{errors.bookingDate}</span>}
-                </div>
-
-                <div className='booking__form-input-wrap'>
-                  <label className='booking__form-label' htmlFor="timeSlot">Time:</label>
-                  <select 
-                    className='booking__select' 
-                    name="timeSlot" 
-                    id="timeSlot"
-                    value={formData.timeSlot}
-                    onChange={handleChange}
-                  >
-                    <option value="">Time Slots</option>
-                    {TIME_SLOTS.map(slot => (
-                      <option 
-                        key={slot} 
-                        value={slot} 
-                        disabled={!availableSlots.includes(slot)}
-                      >
-                        {slot}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.timeSlot && <span className='error-message'>{errors.timeSlot}</span>}
-                </div>
-
-                <div className='booking__form-input-wrap'>
-                  <label className='booking__form-label' htmlFor="notes">Notes:</label>
-                  <textarea 
-                    className='booking__form-input' 
-                    rows="3" 
-                    name="notes" 
-                    id="notes"
-                    placeholder='Specify number of players or any specific requirements'
-                    value={formData.notes}
-                    onChange={handleChange}
-                  />
-                </div>
-              </form>
-            </div>
-
-            <div className='booking__payment-wrap'>
-              <h2 className='booking__payment-heading'>Payment</h2>
-              <p className='booking__payment-amount'>BDT {currentPrice.toLocaleString()}</p>
-              
-              <div className='booking__payment-option-wrap'>
-                <div className='booking__payment-option'>
-                  <div className='booking__payment-radio'>
-                    <input 
-                      className='booking__payment-input' 
-                      id="fullpay" 
-                      name='payment' 
-                      type="radio"
-                      value="full"
-                      checked={formData.paymentType === 'full'}
-                      onChange={handlePaymentChange}
-                    />
-                    <label className='booking__payment-label' htmlFor="fullpay">
-                      Full Pay with bKash
-                    </label>
-                  </div>
-                  <div className='booking__payment-option-logo-wrap'>
-                    <Image className='booking__payment-option-logo' src={bkashLogo} alt="bkash Logo" />
-                  </div>
-                </div>
-
-                <div className='booking__payment-divider-wrap'>
-                  <hr /><p className='booking__payment-divider'>or</p><hr />
-                </div>
-
-                <div className='booking__payment-option'>
-                  <div>
-                    <input 
-                      className='booking__payment-input' 
-                      id="advancepay" 
-                      name='payment' 
-                      type="radio"
-                      value="advance"
-                      checked={formData.paymentType === 'advance'}
-                      onChange={handlePaymentChange}
-                    />
-                    <label className='booking__payment-label' htmlFor="advancepay">
-                      Pay Advance with bKash (BDT 500)
-                    </label>
-                  </div>
-                  <div className='booking__payment-option-logo-wrap'>
-                    <Image className='booking__payment-option-logo' src={bkashLogo} alt="bkash Logo" />
-                  </div>
-                </div>
-
-                {errors.paymentType && <span className='error-message'>{errors.paymentType}</span>}
-
-                <div className='booking__payment-button-wrap'>
-                  <button 
-                    type="submit"
-                    className='tertiary-button booking__payment-button'
-                    onClick={handleSubmit}
-                    disabled={loading}
-                  >
-                    {loading ? 'PROCESSING...' : 'CONFIRM BOOKING'}
-                  </button>
-                </div>
-
-                {submitError && <div className='error-message' style={{ marginBottom: '1rem' }}>{submitError}</div>}
+              {/* Arena Select */}
+              <div className='booking__form-input-wrap'>
+                <label className='booking__form-label' htmlFor="arenaName">Arena:</label>
+                <select 
+                  className='booking__select' 
+                  name="arenaName" 
+                  id="arenaName"
+                  value={formData.arenaName}
+                  onChange={handleChange}
+                >
+                  <option value="">Select Arena</option>
+                  <option value="Sky Turf">Sky Turf</option>
+                  <option value="Time Up">Time Up</option>
+                </select>
+                {errors.arenaName && <span className='error-message'>{errors.arenaName}</span>}
               </div>
-            </div>
+
+              {/* Booking Date */}
+              <div className='booking__form-input-wrap'>
+                <label className='booking__form-label' htmlFor="bookingDate">Date:</label>
+                <input 
+                  className='booking__form-input' 
+                  type="date"
+                  name="bookingDate"
+                  id="bookingDate"
+                  min={getMinDate()}
+                  value={formData.bookingDate}
+                  onChange={handleChange}
+                />
+                {errors.bookingDate && <span className='error-message'>{errors.bookingDate}</span>}
+              </div>
+
+              {/* Time Slot */}
+              <div className='booking__form-input-wrap'>
+                <label className='booking__form-label' htmlFor="timeSlot">Time:</label>
+                <select 
+                  className='booking__select' 
+                  name="timeSlot" 
+                  id="timeSlot"
+                  value={formData.timeSlot}
+                  onChange={handleChange}
+                >
+                  <option value="">Time Slots</option>
+                  {TIME_SLOTS.map(slot => (
+                    <option key={slot} value={slot} disabled={!availableSlots.includes(slot)}>
+                      {slot}
+                    </option>
+                  ))}
+                </select>
+                {errors.timeSlot && <span className='error-message'>{errors.timeSlot}</span>}
+              </div>
+
+              {/* Notes */}
+              <div className='booking__form-input-wrap'>
+                <label className='booking__form-label' htmlFor="notes">Notes:</label>
+                <textarea 
+                  className='booking__form-input' 
+                  rows="3" 
+                  name="notes" 
+                  id="notes"
+                  placeholder='Specify number of players or any specific requirements'
+                  value={formData.notes}
+                  onChange={handleChange}
+                />
+              </div>
+
+              {/* Transaction ID */}
+              <div className='booking__form-input-wrap'>
+                <label className='booking__form-label' htmlFor="transactionId">Transaction ID:</label>
+                <input
+                  type="text"
+                  name="transactionId"
+                  id="transactionId"
+                  maxLength={10}
+                  value={formData.transactionId}
+                  onChange={handleChange}
+                  className='booking__form-input'
+                  placeholder="Enter 10-character transaction ID"
+                />
+                {errors.transactionId && <span className='error-message'>{errors.transactionId}</span>}
+                {formData.transactionId && formData.transactionId.length !== 10 && (
+                  <span className='error-message'>
+                    {formData.transactionId.length}/10 characters entered
+                  </span>
+                )}
+              </div>
+
+              {/* Payment Options */}
+              <div className='booking__payment-wrap'>
+                <h2 className='booking__payment-heading'>Payment</h2>
+                <p className='booking__payment-amount'>BDT {currentPrice.toLocaleString()}</p>
+
+                <div className='booking__payment-option-wrap'>
+                  <div className='booking__payment-option'>
+                    <div className='booking__payment-radio'>
+                      <input 
+                        className='booking__payment-input' 
+                        id="fullpay" 
+                        name='payment' 
+                        type="radio"
+                        value="full"
+                        checked={formData.paymentType === 'full'}
+                        onChange={handlePaymentChange}
+                      />
+                      <label className='booking__payment-label' htmlFor="fullpay">
+                        Full Pay with bKash
+                      </label>
+                    </div>
+                    <div className='booking__payment-option-logo-wrap'>
+                      <Image className='booking__payment-option-logo' src={bkashLogo} alt="bkash Logo" />
+                    </div>
+                  </div>
+
+                  <div className='booking__payment-divider-wrap'>
+                    <hr /><p className='booking__payment-divider'>or</p><hr />
+                  </div>
+
+                  <div className='booking__payment-option'>
+                    <div>
+                      <input 
+                        className='booking__payment-input' 
+                        id="advancepay" 
+                        name='payment' 
+                        type="radio"
+                        value="advance"
+                        checked={formData.paymentType === 'advance'}
+                        onChange={handlePaymentChange}
+                      />
+                      <label className='booking__payment-label' htmlFor="advancepay">
+                        Pay Advance with bKash (BDT 500)
+                      </label>
+                    </div>
+                    <div className='booking__payment-option-logo-wrap'>
+                      <Image className='booking__payment-option-logo' src={bkashLogo} alt="bkash Logo" />
+                    </div>
+                  </div>
+
+                  {errors.paymentType && <span className='error-message'>{errors.paymentType}</span>}
+
+                  <div className='booking__payment-button-wrap'>
+                    <button 
+                      type="submit"
+                      className='tertiary-button booking__payment-button'
+                      disabled={isSubmitDisabled}
+                      title={getButtonTooltip()}
+                    >
+                      {loading ? 'PROCESSING...' : 'CONFIRM BOOKING'}
+                    </button>
+                  </div>
+
+                  {submitError && <div className='error-message' style={{ marginBottom: '1rem' }}>{submitError}</div>}
+                </div>
+              </div>
+            </form>
           </div>
-          
+
+          {/* Booking Summary */}
           <div className="booking__summary-wrap">
             <div className='booking__summary-sticky'>
               <h3 className='booking__summary-heading'>Booking Summary</h3>
@@ -298,30 +337,33 @@ const handleSubmit = async (e) => {
                 <p className='booking__summary-user-contact'>01328501655</p>
               </div>
               <div className='booking__summary-slot-info'>
-                <p className='booking__summary-arena'>Sky Turf</p>
-                <p className='booking__summary-slot'>Sat Dec 27, 10:00 PM</p>
+                <p className='booking__summary-arena'>{formData.arenaName || 'Arena Name'}</p>
+                <p className='booking__summary-slot'>
+                  {formData.bookingDate ? new Date(formData.bookingDate).toDateString() : 'Date'} {formData.timeSlot}
+                </p>
                 <p className='booking__summary-duration'>Duration: 90 mins</p>
               </div>
               <div className='booking__summary-amount-wrap'>
                 <p className='booking__summary-amount-text'>Payable</p>
-                <p className='booking__summary-amount'>BDT 2,500</p>
+                <p className='booking__summary-amount'>BDT {currentPrice.toLocaleString()}</p>
               </div>
               <div className='booking__summary-help-wrap'>
                 <p className='booking__summary-help-title'>Need help?</p>
                 <p className='booking__summary-help-text'>Contact our team of experts for further assistance.</p>
                 <p className='booking__summary-phone-text'>Phone: 
-                  <Link href='tel: 01887876580'>
+                  <Link href='tel:01887876580'>
                     <span className='booking__summary-phone'> +8801887876580</span>
                   </Link>
                 </p>
                 <p className='booking__summary-phone-text'>Email: 
-                  <Link href='mailto: skyturf0@gmail.com'>
+                  <Link href='mailto:skyturf0@gmail.com'>
                     <span className='booking__summary-email'> skyturf0@gmail.com</span>
                   </Link>
                 </p>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
