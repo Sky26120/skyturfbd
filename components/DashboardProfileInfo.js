@@ -4,7 +4,8 @@ import { useSession } from "next-auth/react";
 const roleLabelMap = {
   USER: "User",
   MODERATOR: "Moderator",
-  GENERAL_ADMIN: "Admin",
+  GENERAL_ADMIN: "general Admin",
+   INSPECT_ADMIN: "inspect Admin",
   SUPER_ADMIN: "Super Admin",
 };
 
