@@ -10,6 +10,8 @@ import { hasPermission } from "@/lib/hasPermissions";
 export async function POST(request) {
   try {
     const session = await auth();
+ 
+
 
     if (!session) {
       return NextResponse.json({ error: "Please login first" }, { status: 401 });
@@ -27,7 +29,7 @@ export async function POST(request) {
       transactionId
     } = await request.json();
 
-    if (!arenaName || !bookingDate || !timeSlot || !paymentType || !totalAmount) {
+    if (!arenaName || !bookingDate || !timeSlot || !paymentType || !totalAmount || !transactionId) {
       return NextResponse.json({ error: "Please fill all required fields" }, { status: 400 });
     }
 
@@ -87,7 +89,7 @@ export async function POST(request) {
 export async function GET(request) {
   try {
     const session = await auth();
-
+  
     if (!session) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
@@ -97,8 +99,9 @@ export async function GET(request) {
     const { id: userId, role } = session.user;
 
     let query = {};
+   
 
-    if (hasPermission(role, PERMISSIONS.VIEW_ALL_BOOKINGS)) {
+   if (hasPermission(role, PERMISSIONS.VIEW_ALL_BOOKINGS)) {
       query = {}; 
     } else if (hasPermission(role, PERMISSIONS.VIEW_OWN_BOOKINGS)) {
       query = { user: userId }; 
