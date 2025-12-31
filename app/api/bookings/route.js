@@ -89,7 +89,7 @@ export async function POST(request) {
 export async function GET(request) {
   try {
     const session = await auth();
-  
+  console.log("role from db",session.user.role);
     if (!session) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
