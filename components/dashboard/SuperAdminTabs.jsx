@@ -11,14 +11,14 @@ export default function SuperAdminTabs() {
     <>
       <div className="dashboard__tabs">
         <button
-          className={activeTab === "bookings" ? "active" : ""}
+          className={activeTab === "bookings" ? "active" : "secondary-button"}
           onClick={() => setActiveTab("bookings")}
         >
           All Bookings
         </button>
 
         <button
-          className={activeTab === "users" ? "active" : ""}
+          className={activeTab === "users" ? "active" : "secondary-button"}
           onClick={() => setActiveTab("users")}
         >
           All Users
