@@ -1,23 +1,27 @@
 "use client";
+import DashboardContent from "@/components/dashboard/DashboardContent";
+import DashboardGreeting from "@/components/DashboardGreeting";
+import DashboardProfileInfo from "@/components/DashboardProfileInfo";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+
+
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
-  const router = useRouter();
 
-  // useEffect(() => {
-  //   if (status === "unauthenticated") router.push("/signin");
-  // }, [status, router]);
+  if (status === "loading") return <p>Loading....</p>;
 
-  if (status === "loading") return <p>Loading...</p>;
+  const role = session.user.role;
 
   return (
-    <div>
-      <h1>Welcome, {session.user.name}</h1>
-      <p>Phone: {session.user.phone}</p>
-      <p>Email: {session.user.email}</p>
-    </div>
+    <section className="dashboard">
+      <div className="container">
+        <div className="dashboard__content">
+          <DashboardGreeting />
+          <DashboardProfileInfo />
+          <DashboardContent role={role} />
+        </div>
+      </div>
+    </section>
   );
 }
