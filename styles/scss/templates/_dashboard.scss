@@ -85,13 +85,13 @@
     }
 
     &__booking {
-        margin-top: rem(25px);
+        // margin-top: rem(25px);
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
         padding: rem(40px) rem(20px);
         border-radius: rem(10px);
         overflow: hidden;
         @include mq(large) {
-            margin-top: rem(50px);
+            // margin-top: rem(50px);
             padding: rem(40px);
         }
     }
@@ -156,6 +156,29 @@
         display: flex;
         align-items: center;
         gap: rem(20px);
+    }
+
+    &__tabs {
+        margin-top: rem(25px);
+        display: flex;
+        align-items: center;
+        gap: rem(10px);
+        margin-bottom: rem(10px);
+        @include mq(large) {
+            margin-top: rem(50px);
+        }
+
+        .active {
+            display: table;
+            padding: rem(10px) rem(40px);
+            background: #0059A9;
+            color: #ffffff;
+            border-radius: rem(5px);
+            text-transform: uppercase;
+            font-size: rem(14px);
+            border: 1px solid #0059A9;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
     }
 
     &__tab-content {

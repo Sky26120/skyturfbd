@@ -54,38 +54,40 @@ export default function AdminUsers() {
 
       <div className="dashboard__booking-scroll">
         <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Current Role</th>
-              <th>Update Role</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {users.map(user => (
-              <tr key={user._id}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.role}</td>
-                <td>
-                  <select
-                    value={user.role}
-                    onChange={(e) =>
-                      updateRole(user._id, e.target.value)
-                    }
-                  >
-                    {ALLOWED_ROLES.map(role => (
-                      <option key={role} value={role}>
-                        {role}
-                      </option>
-                    ))}
-                  </select>
-                </td>
+          <div className="dashboard__booking-list">          
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Current Role</th>
+                <th>Update Role</th>
               </tr>
-            ))}
-          </tbody>
+            </thead>
+
+            <tbody>
+              {users.map(user => (
+                <tr key={user._id}>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.role}</td>
+                  <td>
+                    <select
+                      value={user.role}
+                      onChange={(e) =>
+                        updateRole(user._id, e.target.value)
+                      }
+                    >
+                      {ALLOWED_ROLES.map(role => (
+                        <option key={role} value={role}>
+                          {role}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </div>
         </table>
       </div>
     </div>

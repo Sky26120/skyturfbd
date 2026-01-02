@@ -130,7 +130,7 @@ const Booking = () => {
 
       setAvailableSlots(prev => prev.filter(slot => slot !== formData.timeSlot))
       alert('Booking confirmed successfully!')
-      router.push(`/testdashboard`)
+      router.push(`/dashboard`)
     } catch (error) {
       console.error('Booking error:', error)
       setSubmitError(error.message || 'Failed to create booking. Please try again.')
