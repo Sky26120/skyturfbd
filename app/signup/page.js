@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -7,6 +8,7 @@ import SignupImage from '@/public/images/sky-signin.jpg';
 
 export default function SignupPage() {
   const router = useRouter();
+
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -14,13 +16,23 @@ export default function SignupPage() {
     password: "",
     confirmPassword: ""
   });
+
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false); // <-- loading state
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // start loading
+    setLoading(true);
     setMessage("");
+    setIsSuccess(false);
+
+  
+    if (form.password !== form.confirmPassword) {
+      setMessage("Passwords do not match");
+      setLoading(false);
+      return;
+    }
 
     try {
       const res = await fetch("/api/users", {
@@ -29,17 +41,25 @@ export default function SignupPage() {
         body: JSON.stringify(form),
       });
 
-      const data = await res.json();
+      let data = {};
+      try {
+        data = await res.json();
+      } catch (err) {
+        console.error("Invalid JSON response:", err);
+      }
+
       if (res.ok) {
         setMessage("Signup successful!");
+        setIsSuccess(true);
         setTimeout(() => router.push("/signin"), 1000);
       } else {
         setMessage(data.error || "Something went wrong");
       }
     } catch (error) {
+      console.error(error);
       setMessage("Something went wrong, please try again.");
     } finally {
-      setLoading(false); // stop loading
+      setLoading(false);
     }
   };
 
@@ -47,62 +67,74 @@ export default function SignupPage() {
     <section className="signup">
       <div className="container">
         <div className="signup__content">
+       
           <div className="signup__form-wrap">
             <h3 className="secondary-heading signup__heading">Create your account</h3>
             <p className="primary-text signup__text">
               Sky Turf Where Football Meets the Sky
             </p>
+
             <form className="signup__form" onSubmit={handleSubmit}>
-              <label className="signup__form-label" htmlFor="name">Full Name</label>
+              <label htmlFor="name" className="signup__form-label">Full Name</label>
               <input
                 id="name"
-                className="signup__form-input"
                 name="name"
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                className="signup__form-input"
                 placeholder="Full Name"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                required
               />
 
-              <label className="signup__form-label" htmlFor="phone">Phone</label>
+              <label htmlFor="phone" className="signup__form-label">Phone</label>
               <input
                 id="phone"
-                className="signup__form-input"
                 name="phone"
-                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                className="signup__form-input"
                 placeholder="Phone"
+                value={form.phone}
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                required
               />
 
-              <label className="signup__form-label" htmlFor="email">Email</label>
+              <label htmlFor="email" className="signup__form-label">Email</label>
               <input
                 id="email"
-                className="signup__form-input"
                 name="email"
                 type="email"
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                className="signup__form-input"
                 placeholder="Email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                required
               />
 
-              <label className="signup__form-label" htmlFor="password">Password</label>
+              <label htmlFor="password" className="signup__form-label">Password</label>
               <input
                 id="password"
-                className="signup__form-input"
                 name="password"
                 type="password"
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-                placeholder="Password"
-              />
-
-              <label className="signup__form-label" htmlFor="confirm">Confirm Password</label>
-              <input
-                id="confirm"
                 className="signup__form-input"
-                name="confirm"
-                type="password"
-                onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
-                placeholder="Confirm Password"
+                placeholder="Password"
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                required
               />
 
-              {/* Message */}
-              {/* {message && (
+              <label htmlFor="confirmPassword" className="signup__form-label">Confirm Password</label>
+              <input
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                className="signup__form-input"
+                placeholder="Confirm Password"
+                value={form.confirmPassword}
+                onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
+                required
+              />
+
+             
+              {message && (
                 <p
                   style={{
                     marginTop: "10px",
@@ -111,19 +143,15 @@ export default function SignupPage() {
                 >
                   {message}
                 </p>
-              )} */}
+              )}
 
-              {/* Button with loader */}
+              
               <button
                 className="secondary-button signup__button"
                 type="submit"
                 disabled={loading}
               >
-                {loading ? (
-                  <span className="loader" />
-                ) : (
-                  "Sign up"
-                )}
+                {loading ? <span className="loader" /> : "Sign up"}
               </button>
 
               <p className="signup__acc-text">
@@ -134,10 +162,12 @@ export default function SignupPage() {
               </p>
             </form>
           </div>
+
+         
           <div className="signup__image-wrap">
             <Image
               src={SignupImage}
-              alt=""
+              alt="Signup Image"
               width={500}
               className="signup__image"
             />

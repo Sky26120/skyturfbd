@@ -24,7 +24,7 @@ export default function SigninPage() {
       const res = await signIn("credentials", {
         phone: form.phone,
         password: form.password,
-        redirect: false, // prevent auto redirect
+        redirect: false,
       });
 
       setLoading(false);
