@@ -5,12 +5,12 @@ import Loading from "../shared/Loading";
 import EmptyState from "../shared/Empty";
 
 
-export default function BookingTable({ bookings, refetch }) {
+export default function BookingTable({filteredBookings, refetch }) {
   const { data: session } = useSession();
   const role = session.user.role;
 
-  if (!bookings) return <Loading />;
-  if (!bookings.length) return <EmptyState message="No bookings found" />;
+  if (!filteredBookings) return <Loading />;
+  if (!filteredBookings.length) return <EmptyState message="No bookings found" />;
 
   return (
     <div className="dashboard__booking">
@@ -33,7 +33,7 @@ export default function BookingTable({ bookings, refetch }) {
               </tr>
             </thead>
             <tbody>
-              {bookings.map((booking) => (
+              {filteredBookings.map((booking) => (
                 <BookingTableRow
                   key={booking._id}
                   booking={booking}
