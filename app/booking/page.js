@@ -116,7 +116,7 @@ const Booking = () => {
         notes: formData.notes,
         paymentType: formData.paymentType,
         totalAmount: formData.paymentType === 'advance' ? 500 : currentPrice,
-        transactionId: formData.transactionId // string, exactly 10 chars
+        transactionId: formData.transactionId 
       }
 
       const response = await fetch('/api/bookings', {
