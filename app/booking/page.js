@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 
 import DashboardProfileInfo from '@/components/DashboardProfileInfo'
 import bkashLogo from '@/public/images/bkash-logo.webp'
+import { useSession } from 'next-auth/react'
 
 const TIME_SLOTS = [
   "05:00am to 06:30am",
@@ -27,7 +28,7 @@ const TIME_SLOTS = [
 
 const Booking = () => {
   const router = useRouter()
-
+ const { data: session } = useSession();
   const [formData, setFormData] = useState({
     arenaName: '',
     bookingDate: '',
@@ -129,7 +130,7 @@ const Booking = () => {
 
       setAvailableSlots(prev => prev.filter(slot => slot !== formData.timeSlot))
       alert('Booking confirmed successfully!')
-      router.push(`/testdashboard`)
+      router.push(`/dashboard`)
     } catch (error) {
       console.error('Booking error:', error)
       setSubmitError(error.message || 'Failed to create booking. Please try again.')
@@ -341,8 +342,8 @@ const Booking = () => {
             <div className='booking__summary-sticky'>
               <h3 className='booking__summary-heading'>Booking Summary</h3>
               <div className='booking__summary-info-wrap'>
-                <h4 className='booking__summary-user-name'>MINHAZUL ABEDIN</h4>
-                <p className='booking__summary-user-contact'>01328501655</p>
+                <h4 className='booking__summary-user-name'>{session?.user?.name}</h4>
+                <p className='booking__summary-user-contact'>{session?.user?.phone}</p>
               </div>
               <div className='booking__summary-slot-info'>
                 <p className='booking__summary-arena'>{formData.arenaName || 'Arena Name'}</p>
