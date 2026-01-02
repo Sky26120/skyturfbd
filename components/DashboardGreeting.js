@@ -13,7 +13,7 @@ const DashboardGreeting = () => {
       <div className="dashboard__button-wrap">
         <button
           className="secondary-button"
-          onClick={() => signOut({ callbackUrl: "/" })}
+          onClick={() => signOut({ callbackUrl: "/signin" })}
         >
           Sign Out
         </button>

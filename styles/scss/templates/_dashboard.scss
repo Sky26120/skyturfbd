@@ -42,7 +42,9 @@
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
         padding: rem(40px) rem(20px);
         border-radius: rem(10px);
+        margin-bottom: rem(25px);
         @include mq(large) {
+            margin-bottom: rem(50px);
             padding: rem(40px);
         }
     }
@@ -85,13 +87,12 @@
     }
 
     &__booking {
-        // margin-top: rem(25px);
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
         padding: rem(40px) rem(20px);
         border-radius: rem(10px);
         overflow: hidden;
+        max-height: rem(700px);
         @include mq(large) {
-            // margin-top: rem(50px);
             padding: rem(40px);
         }
     }
