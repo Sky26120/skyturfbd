@@ -67,7 +67,7 @@ export default function AdminBookings() {
         />
 
         {selectedDate && (
-          <button onClick={() => setSelectedDate("")}>
+          <button className="tertiary-button" onClick={() => setSelectedDate("")}>
             Clear
           </button>
         )}

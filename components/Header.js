@@ -136,9 +136,11 @@ const Header = () => {
                 </Link>
 
                 {session?.user ? (
-                  <span className="header__nav-item header__user-name">
-                    {session.user.name}
-                  </span>
+                  <Link href="/dashboard" onClick={toggleMenu}>
+                    <span className="header__nav-item header__user-name">
+                      {session.user.name}
+                    </span>
+                  </Link>
                 ) : (
                   <Link href="/signin" onClick={toggleMenu}>
                     <span className="primary-button header__nav-item-button--mobile">

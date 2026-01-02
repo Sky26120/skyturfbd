@@ -190,14 +190,12 @@
         }
     }
 
-    &__filter-date {
-        margin-top: rem(25px);
-        margin-bottom: rem(20px);
+    &__filter {
         display: flex;
+        align-items: center;
         justify-content: flex-end;
-        @include mq(large){
-            margin-bottom: rem(10px);
-        }
+        gap: rem(20px);
+        margin-bottom: rem(10px);
 
         input {
             padding: rem(5px) rem(20px);

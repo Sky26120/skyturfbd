@@ -79,6 +79,24 @@
         }
     }
 
+    &__user-name {
+        font-size: rem(14px);
+        font-weight: $fw-bold;
+        color: #ffffff;
+        text-transform: uppercase;
+        padding: rem(20px) rem(10px);
+        display: block;
+        text-align: center;
+        @include mq(large) {
+            padding: rem(39px) rem(10px);
+        }
+
+        &:hover {
+            color: #EE1B24;
+            cursor: pointer;
+        }
+    }
+
     &__nav-item-button {
         &--mobile {
             margin-left: auto;
