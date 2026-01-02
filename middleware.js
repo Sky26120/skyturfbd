@@ -20,22 +20,22 @@ export async function middleware(req) {
   }
 
 
-  const roleRouteMap = {
-    CUSTOMER: ["/dashboard/user"],
-    GENERAL_ADMIN: ["/dashboard/admin"],
-    MODERATOR: ["/dashboard/moderator"],
-    INSPECT_ADMIN: ["/dashboard/inspect-admin"],
-  };
+  // const roleRouteMap = {
+  //   CUSTOMER: ["/dashboard/user"],
+  //   GENERAL_ADMIN: ["/dashboard/admin"],
+  //   MODERATOR: ["/dashboard/moderator"],
+  //   INSPECT_ADMIN: ["/dashboard/inspect-admin"],
+  // };
 
-  const allowedRoutes = roleRouteMap[token?.role] || [];
+  // const allowedRoutes = roleRouteMap[token?.role] || [];
 
-  const isAllowed = allowedRoutes.some((route) =>
-    pathname.startsWith(route)
-  );
+  // const isAllowed = allowedRoutes.some((route) =>
+  //   pathname.startsWith(route)
+  // );
 
-  if (!isAllowed && pathname.startsWith("/dashboard")) {
-    return NextResponse.redirect(new URL("/unauthorized", req.url));
-  }
+  // if (!isAllowed && pathname.startsWith("/dashboard")) {
+  //   return NextResponse.redirect(new URL("/unauthorized", req.url));
+  // }
 
   return NextResponse.next();
 }
