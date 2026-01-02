@@ -36,7 +36,7 @@ export default function AdminBookings() {
     fetchBookings();
   }, []);
 
-  // ✅ DATE FILTER (FIXED)
+
   useEffect(() => {
     if (!selectedDate) {
       setFilteredBookings(bookings);

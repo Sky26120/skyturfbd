@@ -49,7 +49,7 @@ const Footer = () => {
                             <Link href='/aboutus' className='footer__column-nav-item-link'>
                                 <span className='footer__column-nav-item'>About Us</span>
                             </Link>
-                            <Link href='/dashboard/user' className='footer__column-nav-item-link'>
+                            <Link href='/dashboard' className='footer__column-nav-item-link'>
                                 <span className='footer__column-nav-item'>My Account</span>
                             </Link>
                             <Link href='/privacypolicy' className='footer__column-nav-item-link'>
