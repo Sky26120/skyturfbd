@@ -39,5 +39,5 @@ export default function UserBookings() {
     </>
   );
 
-  return <BookingTable bookings={bookings} refetch={() => {}} />;
+  return <BookingTable filteredBookings={bookings}   refetch={() => {}} />;
 }
