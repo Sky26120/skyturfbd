@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import DashboardProfileInfo from '@/components/DashboardProfileInfo'
 import bkashLogo from '@/public/images/bkash-logo.webp'
 import { useSession } from 'next-auth/react'
+import toast from 'react-hot-toast'
 
 const TIME_SLOTS = [
   "05:00am to 06:30am",
@@ -129,11 +130,13 @@ const Booking = () => {
       if (!response.ok) throw new Error(data.error || 'Failed to create booking')
 
       setAvailableSlots(prev => prev.filter(slot => slot !== formData.timeSlot))
-      alert('Booking confirmed successfully!')
+      toast.success('Booking confirmed successfully!',{duration:3000})
       router.push(`/dashboard`)
     } catch (error) {
       console.error('Booking error:', error)
-      setSubmitError(error.message || 'Failed to create booking. Please try again.')
+      toast.error(error.message || 'Failed to create booking. Please try again.',{
+        duration:3000
+      })
     } finally {
       setLoading(false)
     }

@@ -3,6 +3,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer';
 
 import { Providers } from './Providers/providers';
+import ToastProvider from './Providers/ToastProvider';
 
 export const metadata = {
   title: "Sky Turf",
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
        <Providers>
           <Header />
           {children}
+          <ToastProvider />
           <Footer />
         </Providers>
       </body>
