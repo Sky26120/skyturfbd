@@ -8,17 +8,17 @@ const bookingSchema = new mongoose.Schema(
       required: true,
     },
 
-    userName: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    // userName: {
+    //   type: String,
+    //   required: true,
+    //   trim: true,
+    // },
 
-    userPhone: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    // userPhone: {
+    //   type: String,
+    //   required: true,
+    //   trim: true,
+    // },
 
     arenaName: {
       type: String,
@@ -42,14 +42,12 @@ const bookingSchema = new mongoose.Schema(
       default: 90,
     },
 
-  
     status: {
       type: String,
       enum: ["pending", "confirmed", "cancelled", "completed"],
       default: "pending",
     },
 
-   
     paymentType: {
       type: String,
       enum: ["full", "advance"],
@@ -76,12 +74,35 @@ const bookingSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-
-    bookingBy: {
+    advanceReceiver: {
       type: String,
-      enum: ["user", "moderator", "admin"],
-      default: "user",
+      trim: true,
+      default: null,
     },
+
+    dueReceiver: {
+      type: String,
+      trim: true,
+      default: null,
+    },
+
+   bookingForName: {
+  type: String,
+  required: true,
+  trim: true,
+},
+
+bookingForPhone: {
+  type: String,
+  required: true,
+  trim: true,
+},
+
+bookingByRole: {
+  type: String,
+  enum: ["SUPER_ADMIN", "GENERAL_ADMIN",  "MODERATOR", "USER"],
+  required: true,
+},
 
     notes: {
       type: String,
@@ -91,12 +112,14 @@ const bookingSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-
 bookingSchema.index({ user: 1, bookingDate: -1 });
 
 bookingSchema.index(
   { arenaName: 1, bookingDate: 1, timeSlot: 1 },
-  { unique: true, partialFilterExpression: { status: { $in: ["pending", "confirmed"] } } }
+  {
+    unique: true,
+    partialFilterExpression: { status: { $in: ["pending", "confirmed"] } },
+  }
 );
 
 export default mongoose.models.Booking ||

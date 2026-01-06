@@ -29,14 +29,18 @@ const TIME_SLOTS = [
 
 const Booking = () => {
   const router = useRouter()
- const { data: session } = useSession();
+  const { data: session } = useSession();
+
   const [formData, setFormData] = useState({
     arenaName: '',
     bookingDate: '',
     timeSlot: '',
     notes: '',
     paymentType: '',
-    transactionId: ''
+    transactionId: '',
+    bookingForName: '',
+    bookingForPhone: '',
+    advanceAmount: 500
   })
 
   const [errors, setErrors] = useState({})
@@ -51,10 +55,12 @@ const Booking = () => {
 
   const currentPrice = arenaPricing[formData.arenaName] || 0
 
+  const role = session?.user?.role
+  const isStaff = role !== "USER"  // Admin/Moderator booking for customer
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
-
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }))
   }
 
@@ -97,6 +103,14 @@ const Booking = () => {
     else if (formData.transactionId.length !== 10)
       newErrors.transactionId = 'Transaction ID must be exactly 10 characters'
 
+    if (isStaff) {
+      if (!formData.bookingForName) newErrors.bookingForName = "Customer name is required"
+      if (!formData.bookingForPhone) newErrors.bookingForPhone = "Customer phone is required"
+    }
+
+    if (formData.paymentType === "advance" && formData.advanceAmount < 500)
+      newErrors.advanceAmount = "Advance amount must be at least 500"
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
@@ -116,8 +130,12 @@ const Booking = () => {
         timeSlot: formData.timeSlot,
         notes: formData.notes,
         paymentType: formData.paymentType,
-        totalAmount: formData.paymentType === 'advance' ? 500 : currentPrice,
-        transactionId: formData.transactionId 
+        transactionId: formData.transactionId,
+        totalAmount: formData.paymentType === "advance" ? formData.advanceAmount : currentPrice,
+        ...(isStaff && {
+          bookingForName: formData.bookingForName,
+          bookingForPhone: formData.bookingForPhone
+        })
       }
 
       const response = await fetch('/api/bookings', {
@@ -130,13 +148,11 @@ const Booking = () => {
       if (!response.ok) throw new Error(data.error || 'Failed to create booking')
 
       setAvailableSlots(prev => prev.filter(slot => slot !== formData.timeSlot))
-      toast.success('Booking confirmed successfully!',{duration:3000})
+      toast.success('Booking confirmed successfully!', { duration: 3000 })
       router.push(`/dashboard`)
     } catch (error) {
       console.error('Booking error:', error)
-      toast.error(error.message || 'Failed to create booking. Please try again.',{
-        duration:3000
-      })
+      toast.error(error.message || 'Failed to create booking. Please try again.', { duration: 3000 })
     } finally {
       setLoading(false)
     }
@@ -153,7 +169,9 @@ const Booking = () => {
     !formData.bookingDate ||
     !formData.timeSlot ||
     !formData.paymentType ||
-    formData.transactionId.length !== 10
+    formData.transactionId.length !== 10 ||
+    (isStaff && (!formData.bookingForName || !formData.bookingForPhone)) ||
+    (formData.paymentType === "advance" && formData.advanceAmount < 500)
 
   const getButtonTooltip = () => {
     if (loading) return 'Processing...'
@@ -162,6 +180,8 @@ const Booking = () => {
     if (!formData.timeSlot) return 'Please select a time slot'
     if (!formData.paymentType) return 'Please select a payment option'
     if (formData.transactionId.length !== 10) return 'Transaction ID must be exactly 10 characters'
+    if (isStaff && (!formData.bookingForName || !formData.bookingForPhone)) return 'Enter customer name & phone'
+    if (formData.paymentType === "advance" && formData.advanceAmount < 500) return 'Advance must be at least 500'
     return 'Confirm your booking'
   }
 
@@ -179,9 +199,9 @@ const Booking = () => {
               {/* Arena Select */}
               <div className='booking__form-input-wrap'>
                 <label className='booking__form-label' htmlFor="arenaName">Arena:</label>
-                <select 
-                  className='booking__select' 
-                  name="arenaName" 
+                <select
+                  className='booking__select'
+                  name="arenaName"
                   id="arenaName"
                   value={formData.arenaName}
                   onChange={handleChange}
@@ -196,8 +216,8 @@ const Booking = () => {
               {/* Booking Date */}
               <div className='booking__form-input-wrap'>
                 <label className='booking__form-label' htmlFor="bookingDate">Date:</label>
-                <input 
-                  className='booking__form-input' 
+                <input
+                  className='booking__form-input'
                   type="date"
                   name="bookingDate"
                   id="bookingDate"
@@ -211,9 +231,9 @@ const Booking = () => {
               {/* Time Slot */}
               <div className='booking__form-input-wrap'>
                 <label className='booking__form-label' htmlFor="timeSlot">Time:</label>
-                <select 
-                  className='booking__select' 
-                  name="timeSlot" 
+                <select
+                  className='booking__select'
+                  name="timeSlot"
                   id="timeSlot"
                   value={formData.timeSlot}
                   onChange={handleChange}
@@ -227,6 +247,34 @@ const Booking = () => {
                 </select>
                 {errors.timeSlot && <span className='error-message'>{errors.timeSlot}</span>}
               </div>
+
+             
+              {isStaff && (
+                <>
+                  <div className='booking__form-input-wrap'>
+                    <label className='booking__form-label'>Customer Name:</label>
+                    <input
+                      type="text"
+                      name="bookingForName"
+                      className='booking__form-input'
+                      value={formData.bookingForName}
+                      onChange={handleChange}
+                    />
+                    {errors.bookingForName && <span className='error-message'>{errors.bookingForName}</span>}
+                  </div>
+                  <div className='booking__form-input-wrap'>
+                    <label className='booking__form-label'>Customer Phone:</label>
+                    <input
+                      type="text"
+                      name="bookingForPhone"
+                      className='booking__form-input'
+                      value={formData.bookingForPhone}
+                      onChange={handleChange}
+                    />
+                    {errors.bookingForPhone && <span className='error-message'>{errors.bookingForPhone}</span>}
+                  </div>
+                </>
+              )}
 
               {/* Transaction ID */}
               <div className='booking__form-input-wrap'>
@@ -253,13 +301,28 @@ const Booking = () => {
                 )}
               </div>
 
+              {/* Advance Amount */}
+              {formData.paymentType === "advance" && (
+                <div className='booking__form-input-wrap'>
+                  <label className='booking__form-label'>Advance Amount (min 500):</label>
+                  <input
+                    type="number"
+                    min={500}
+                    className='booking__form-input'
+                    value={formData.advanceAmount}
+                    onChange={(e) => setFormData(prev => ({ ...prev, advanceAmount: Number(e.target.value) }))}
+                  />
+                  {errors.advanceAmount && <span className='error-message'>{errors.advanceAmount}</span>}
+                </div>
+              )}
+
               {/* Notes */}
               <div className='booking__form-input-wrap'>
                 <label className='booking__form-label' htmlFor="notes">Notes:</label>
-                <textarea 
-                  className='booking__form-input' 
-                  rows="3" 
-                  name="notes" 
+                <textarea
+                  className='booking__form-input'
+                  rows="3"
+                  name="notes"
                   id="notes"
                   placeholder='Specify number of players or any specific requirements'
                   value={formData.notes}
@@ -275,10 +338,10 @@ const Booking = () => {
                 <div className='booking__payment-option-wrap'>
                   <div className='booking__payment-option'>
                     <div className='booking__payment-radio'>
-                      <input 
-                        className='booking__payment-input' 
-                        id="fullpay" 
-                        name='payment' 
+                      <input
+                        className='booking__payment-input'
+                        id="fullpay"
+                        name='payment'
                         type="radio"
                         value="full"
                         checked={formData.paymentType === 'full'}
@@ -299,17 +362,17 @@ const Booking = () => {
 
                   <div className='booking__payment-option'>
                     <div>
-                      <input 
-                        className='booking__payment-input' 
-                        id="advancepay" 
-                        name='payment' 
+                      <input
+                        className='booking__payment-input'
+                        id="advancepay"
+                        name='payment'
                         type="radio"
                         value="advance"
                         checked={formData.paymentType === 'advance'}
                         onChange={handlePaymentChange}
                       />
                       <label className='booking__payment-label' htmlFor="advancepay">
-                        Pay Advance with bKash (BDT 500)
+                        Pay Advance with bKash
                       </label>
                     </div>
                     <div className='booking__payment-option-logo-wrap'>
@@ -322,7 +385,7 @@ const Booking = () => {
                   <p className='booking__payment-agree-text'>By making this booking you agree to our terms and conditions.</p>
 
                   <div className='booking__payment-button-wrap'>
-                    <button 
+                    <button
                       type="submit"
                       className='tertiary-button booking__payment-button'
                       disabled={isSubmitDisabled}
@@ -357,17 +420,17 @@ const Booking = () => {
               </div>
               <div className='booking__summary-amount-wrap'>
                 <p className='booking__summary-amount-text'>Payable</p>
-                <p className='booking__summary-amount'>BDT {currentPrice.toLocaleString()}</p>
+                <p className='booking__summary-amount'>BDT {formData.paymentType === "advance" ? formData.advanceAmount.toLocaleString() : currentPrice.toLocaleString()}</p>
               </div>
               <div className='booking__summary-help-wrap'>
                 <p className='booking__summary-help-title'>Need help?</p>
                 <p className='booking__summary-help-text'>Contact our team of experts for further assistance.</p>
-                <p className='booking__summary-phone-text'>Phone: 
+                <p className='booking__summary-phone-text'>Phone:
                   <Link href='tel:01887876580'>
                     <span className='booking__summary-phone'> +8801887876580</span>
                   </Link>
                 </p>
-                <p className='booking__summary-phone-text'>Email: 
+                <p className='booking__summary-phone-text'>Email:
                   <Link href='mailto:skyturf0@gmail.com'>
                     <span className='booking__summary-email'> skyturf0@gmail.com</span>
                   </Link>
