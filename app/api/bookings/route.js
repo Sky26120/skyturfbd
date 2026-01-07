@@ -5,19 +5,24 @@ import Booking from "@/models/Booking";
 
 import { PERMISSIONS } from "@/lib/permissions";
 import { hasPermission } from "@/lib/hasPermissions";
+import User from "@/models/User";
+import mongoose from "mongoose";
+
+
+
 
 
 export async function POST(request) {
   try {
     const session = await auth();
- 
-
 
     if (!session) {
       return NextResponse.json({ error: "Please login first" }, { status: 401 });
     }
 
     await connectDB();
+
+    const body = await request.json();
 
     const {
       arenaName,
@@ -26,14 +31,32 @@ export async function POST(request) {
       notes,
       paymentType,
       totalAmount,
-      transactionId
-    } = await request.json();
+      transactionId,
+      bookingForName,
+      bookingForPhone,
+    } = body;
 
-    if (!arenaName || !bookingDate || !timeSlot || !paymentType || !totalAmount || !transactionId) {
-      return NextResponse.json({ error: "Please fill all required fields" }, { status: 400 });
+    if ( !arenaName ||
+  !bookingDate ||
+  !timeSlot ||
+  !paymentType ||
+  totalAmount === undefined ||
+  totalAmount === null ||
+  !transactionId) {
+      return NextResponse.json(
+        { error: "Please fill all required fields" },
+        { status: 400 }
+      );
     }
-
+    if (transactionId.length !== 10) {
+  return NextResponse.json(
+    { error: "Transaction ID must be exactly 10 characters" },
+    { status: 400 }
+  );
+}
     
+
+   
     const existingBooking = await Booking.findOne({
       arenaName,
       bookingDate: new Date(bookingDate),
@@ -42,10 +65,13 @@ export async function POST(request) {
     });
 
     if (existingBooking) {
-      return NextResponse.json({ error: "This slot is already booked" }, { status: 400 });
+      return NextResponse.json(
+        { error: "This slot is already booked" },
+        { status: 400 }
+      );
     }
 
-    
+
     let paidAmount = 0;
     let paymentStatus = "unpaid";
 
@@ -53,26 +79,60 @@ export async function POST(request) {
       paidAmount = totalAmount;
       paymentStatus = "paid";
     } else if (paymentType === "advance") {
-      paidAmount = 500; 
+      paidAmount = totalAmount; 
       paymentStatus = "partial";
     }
 
+   
+   let finalUserId = null;
+    let finalName = "";
+    let finalPhone = "";
+
+   if (session.user.role === "USER") {
+  const dbUser = await User.findOne({ email: session.user.email });
+
+  if (!dbUser) {
+    return NextResponse.json(
+      { error: "User not found" },
+      { status: 404 }
+    );
+  }
+
+  finalUserId = dbUser._id; 
+  finalName = session.user.name;
+  finalPhone = session.user.phone;
+} else {
+ 
+      if (!bookingForName || !bookingForPhone) {
+        return NextResponse.json(
+          { error: "Customer name and phone are required" },
+          { status: 400 }
+        );
+      }
+
+      finalName = bookingForName;
+      finalPhone = bookingForPhone;
+    }
+
     const booking = await Booking.create({
-      user: session.user.id,
-      userName: session.user.name,
-      userPhone: session.user.phone,
+     user: new mongoose.Types.ObjectId(finalUserId),
+      bookingForName: finalName,
+      bookingForPhone: finalPhone,
+
       arenaName,
       bookingDate: new Date(bookingDate),
       timeSlot,
       duration: 90,
       notes: notes || "",
+
       paymentType,
       totalAmount,
       paidAmount,
       paymentStatus,
+
+      transactionId,
       status: "pending",
-      createdByRole: session.user.role,
-      transactionId, 
+      bookingByRole: session.user.role,
     });
 
     return NextResponse.json(
@@ -84,6 +144,7 @@ export async function POST(request) {
     return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
   }
 }
+
 
 
 export async function GET(request) {
