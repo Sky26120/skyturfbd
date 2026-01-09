@@ -22,11 +22,11 @@ export default function SigninPage() {
     setLoading(true);
 
     try {
-      const res = await signIn("credentials", {
-        phone: form.phone,
-        password: form.password,
-        redirect: false,
-      });
+      await signIn("credentials", {
+  phone: form.phone,
+  password: form.password,
+  callbackUrl: "/dashboard",
+});
 
       setLoading(false);
 
@@ -34,7 +34,7 @@ export default function SigninPage() {
         toast.error(res.error || "Invalid credentials");
       } else if (res?.ok) {
         toast.success("Sign-in successful!");
-        setTimeout(() => router.push("/dashboard"), 1000);
+        
       } else {
         toast.error("Unexpected error occurred.");
       }

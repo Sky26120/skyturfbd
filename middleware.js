@@ -2,16 +2,15 @@ import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(req) {
-  const { pathname } = req.nextUrl;
-
   const token = await getToken({
     req,
     secret: process.env.NEXTAUTH_SECRET,
   });
 
- 
-  if (!token && pathname.startsWith("/dashboard")) {
-    return NextResponse.redirect(new URL("/signin", req.url));
+
+  if (!token) {
+    const signinUrl = new URL("/signin", req.nextUrl.origin);
+    return NextResponse.redirect(signinUrl);
   }
 
   return NextResponse.next();
