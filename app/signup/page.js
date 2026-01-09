@@ -69,7 +69,7 @@ export default function SignupPage() {
 
       if (res.ok) {
         toast.success("Signup successful!");
-        setTimeout(() => router.push("/signin"), 1000);
+        setTimeout(() => router.push("/dashboard"), 1000);
       } else {
         toast.error(data?.error || "Something went wrong");
       }
