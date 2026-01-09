@@ -91,7 +91,8 @@
         padding: rem(40px) rem(20px);
         border-radius: rem(10px);
         overflow: hidden;
-        max-height: rem(700px);
+        max-height: rem(500px);
+        overflow-y: scroll;
         @include mq(large) {
             padding: rem(40px);
         }
