@@ -1,5 +1,3 @@
-
-
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { connectDB } from "@/lib/mongodb";
@@ -7,6 +5,8 @@ import User from "@/models/User";
 import bcrypt from "bcryptjs";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  secret: process.env.NEXTAUTH_SECRET,
+
   providers: [
     Credentials({
       name: "Credentials",
@@ -43,6 +43,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: "/signin",
   },
 
+  cookies: {
+    sessionToken: {
+      name:
+        process.env.NODE_ENV === "production"
+          ? "__Secure-next-auth.session-token"
+          : "next-auth.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
+
   callbacks: {
     jwt({ token, user }) {
       if (user) {
@@ -54,9 +69,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
 
     session({ session, token }) {
-      session.user.id = token.id;
-      session.user.role = token.role;
-      session.user.phone = token.phone;
+      if (session.user) {
+        session.user.id = token.id;
+        session.user.role = token.role;
+        session.user.phone = token.phone;
+      }
       return session;
     },
   },
