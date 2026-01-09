@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 
 import SignupImage from "@/public/images/sky-signin.jpg";
+import toast from "react-hot-toast";
 
 export default function SigninPage() {
   const [form, setForm] = useState({ phone: "", password: "" });
@@ -30,17 +31,17 @@ export default function SigninPage() {
       setLoading(false);
 
       if (res?.error) {
-        setError(res.error || "Invalid credentials");
+        toast.error(res.error || "Invalid credentials");
       } else if (res?.ok) {
-        // window.location.href = "/dashboard";
-        router.push('/dashboard')
+        toast.success("Sign-in successful!");
+        setTimeout(() => router.push("/dashboard"), 1000);
       } else {
-        setError("Unexpected error occurred.");
+        toast.error("Unexpected error occurred.");
       }
     } catch (err) {
       console.error("Login error:", err);
       setLoading(false);
-      setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
